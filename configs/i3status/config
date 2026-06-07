@@ -49,7 +49,7 @@ load {
 
 memory {
         # Cyan
-        format = "<span color='#F1FA8C'>%used</span>"
+        format = "<span color='#F1FA8C'>%used/%total</span>"
         threshold_degraded = "1G"
         format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
 }

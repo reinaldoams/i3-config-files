@@ -21,3 +21,13 @@ Used programs (that didnt come from Fedora i3 Spin):
 Additional steps:
 - adding name of currently open window to i3status bar:
     https://github.com/rholder/i3status-title-on-bar/
+- disabling GRUB (in /etc/default/grub):
+    GRUB_TIMEOUT=0
+    GRUB_TIMEOUT_STYLE=hidden
+    (and then running `sudo grub2-mkconfig -o /boot/grub2/grub.cfg`)
+- running these commands to make booting faster:
+    `sudo systemctl disable NetworkManager-wait-online.service`
+    (disabling config that makes computer wait for internet connection before continuing boot)
+    `sudo dracut --force --hostonly`
+    (rebuild image of initramfs creating an lightweight system-specific image)
+- if dual booting with Windows, remember to go to Windows settings to disable fast startup to make Linux boot faster
