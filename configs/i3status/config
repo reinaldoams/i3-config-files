@@ -1,0 +1,76 @@
+
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+	output_format = "i3bar"
+        colors = true
+        interval = 1
+        markup = "pango"            # Enables individual color wrapping
+        
+        # Fallback Dracula Colors
+        color_good = "#50FA7B"      # Green
+        color_degraded = "#F1FA8C"  # Yellow
+        color_bad = "#FF5555"       # Red
+}
+
+order += "tztime time"
+order += "memory"
+order += "cpu_usage"
+order += "volume master"
+order += "tztime date"
+
+wireless _first_ {
+        format_up = "W: (%quality at %essid) %ip"
+        format_down = "W: down"
+}
+
+ethernet _first_ {
+        format_up = "(%speed)"
+        format_down = "E: down"
+}
+
+battery all {
+        format = "%status %percentage %remaining"
+}
+
+disk "/" {
+        format = "%avail"
+}
+
+load {
+        format = "%1min"
+}
+
+memory {
+        # Cyan
+        format = "<span color='#F1FA8C'>%used</span>"
+        threshold_degraded = "1G"
+        format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
+}
+
+cpu_usage {
+        # Foreground color
+        format = "<span color='#F8F8F2'>🔲%usage</span>"
+}
+
+volume master {
+        # Orange color
+        format = "<span color='#FFB86C'>🔊%volume</span>"
+        format_muted = "<span color='#FF5555'>🔇%volume</span>"
+}
+
+tztime date {
+        # Green
+        format = "<span color='#50FA7B'>%Y.%m.%d</span>"
+}
+
+tztime time {
+        # Current Line color
+        format = "<span color='#8BE9FD'>%H:%M</span>"
+}
