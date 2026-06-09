@@ -31,3 +31,6 @@ Additional steps:
     `sudo dracut --force --hostonly`
     (rebuild image of initramfs creating an lightweight system-specific image)
 - if dual booting with Windows, remember to go to Windows settings to disable fast startup to make Linux boot faster
+
+yabridge note:
+- don't use flatpak to install the DAW to prevent files access issues when syncing plugins
