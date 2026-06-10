@@ -1,0 +1,204 @@
+Set $mod Mod4
+
+font pango:Cousine Nerd Font Mono 14
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex-autostart --autostart --environment i3
+
+# Export session env so dbus/systemd can launch GUI apps (e.g. Dolphin for "Show in folder")
+exec --no-startup-id sh -c 'export GTK_THEME=Breeze-Dark QT_QPA_PLATFORMTHEME=kde && dbus-update-activation-environment --systemd DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR XDG_CURRENT_DESKTOP GTK_THEME QT_QPA_PLATFORMTHEME'
+exec --no-startup-id xsettingsd
+exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY
+exec --no-startup-id systemctl --user start dolphin-daemon.service
+exec --no-startup-id nm-applet
+
+# gammastep (night mode)
+exec --no-startup-id gammastep -P -O 3000
+
+# setting wallpaper
+exec --no-startup-id feh --bg-fill ~/Documents/wallpaper.png
+
+# setting keyboard layout (re-applied after autostart/xrandr, which can reset XKB)
+exec --no-startup-id setxkbmap -layout us -variant intl
+
+# flameshot daemon (clipboard copy needs this running on i3)
+exec --no-startup-id flameshot
+
+# setting parcellite clipboard manager
+exec --no-startup-id parcellite
+
+# keep screen on (disable X screensaver and DPMS blanking)
+exec --no-startup-id xset s off
+exec --no-startup-id xset -dpms
+exec --no-startup-id xset s noblank
+
+# external monitor only at login ($mod+p toggles displays, $mod+Shift+p for both)
+exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --auto --output eDP-1 --off && setxkbmap -layout us -variant intl && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && i3-msg workspace number 1'
+
+# add wifi password to the connection with nmcli (run this command in the terminal):
+# nmcli connection modify "WIFI_NAME" wifi-sec.psk "YOUR_WIFI_PASSWORD"
+
+# auto-connect WiFi after NetworkManager is ready
+# exec --no-startup-id /home/reinaldo/.config/i3/scripts/connect-wifi.sh
+
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && \
+    notify-send -t 1000 -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1) "Volume" ""
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && \
+    notify-send -t 1000 -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1) "Volume" ""
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && \
+    notify-send -t 1000 "Volume" "Toggled mute"
+
+# open google chrome with Win + b
+bindsym $mod+b exec google-chrome
+
+# screen lock shortcut
+bindsym $mod+l exec i3lock -i ~/Documents/wallpaper.png
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+q kill
+
+# start i3-dmenu-desktop
+bindsym $mod+d exec "i3-dmenu-desktop"
+
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# toggle split orientation
+bindsym $mod+semicolon split toggle
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Shift+slash layout toggle all
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# enable both displays
+bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --auto --left-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && notify-send -t 1500 "Display" "Both screens"'
+# toggle between built-in and external display
+bindsym $mod+p exec --no-startup-id /home/reinaldo/.config/i3/scripts/toggle-display.sh
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Resizing windows
+bindsym $mod+Control Right resize grow   width  5 px or 5 ppt
+bindsym $mod+Control Left  resize shrink width  5 px or 5 ppt
+bindsym $mod+Control Up    resize grow   height 5 px or 5 ppt
+bindsym $mod+Control Down  resize shrink height 5 px or 5 ppt
+
+bindsym Print exec --no-startup-id flameshot gui
+
+# class                 border    bground   text      indicator child_border
+client.focused          #6272A4   #6272A4   #F8F8F2   #FFFF00   #BD93F9
+client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #44475A
+client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #282A36
+client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
+client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
+client.background                 #F8F8F2
+
+# i3bar configuration
+bar {
+    status_command i3status | i3status-title-on-bar --color '#FFFF00'
+
+
+     colors {
+        # background       #282A36
+        # statusline       #F8F8F2
+        # separator        #44475A
+
+        # class            border    bground   text
+        focused_workspace  #cccccc   #cccccc   #000000
+        active_workspace   #000000   #44475A   #F8F8F2
+        inactive_workspace #000000   #000000   #aaaaaa
+        urgent_workspace   #000000   #FF5555   #000000
+        binding_mode       #000000   #FF5555   #F8F8F2
+    }
+}
+
+# styling windows borders
+for_window [class="^.*"] border pixel 1
+# adding a little margin around windows
+gaps inner 10
+gaps outer -10
+
+# Making pop-up windows of some programs floating enable
+for_window [class="knotes"] floating enable
+for_window [class="Steam"] floating enable
+for_window [class="steamwebhelper"] floating enable
+for_window [class="qBittorrent" title="^Add New Torrent$"] floating enable
+
+for_window [class="plasmashell"] floating enable
+for_window [title="Desktop — Plasma"] kill, floating enable, border none
+
