@@ -19,11 +19,11 @@ general {
         color_bad = "#FF5555"       # Red
 }
 
-order += "tztime time"
 order += "memory"
 order += "cpu_usage"
 order += "volume master"
 order += "tztime date"
+order += "tztime time"
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"

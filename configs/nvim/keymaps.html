@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neovim Configuration Dashboard</title>
+    <style>
+        :root {
+            --bg-main: #0f1419;
+            --bg-sidebar: #14191f;
+            --bg-card: #1a202c;
+            --text-main: #e6edf3;
+            --text-muted: #8b949e;
+            --accent: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --border: #30363d;
+            --kbg: #21262d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: all 0.2s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sidebar a:hover, .sidebar a.active {
+            background-color: var(--border);
+            color: var(--text-main);
+        }
+
+        /* Main Content Container */
+        .content {
+            flex-grow: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        /* Search Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .search-container {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: var(--accent);
+        }
+
+        /* File Sections */
+        .section {
+            margin-bottom: 3rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--accent);
+            font-family: monospace;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Shortcut keys styling */
+        kbd {
+            background-color: var(--kbg);
+            border: 1px solid var(--border);
+            border-bottom-color: #484f58;
+            border-radius: 6px;
+            box-shadow: inset 0 -1px 0 #484f58;
+            color: var(--text-main);
+            display: inline-block;
+            font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+            font-size: 11px;
+            line-height: 10px;
+            padding: 4px 6px;
+            vertical-align: middle;
+        }
+
+        /* Mode & Feature Tags */
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            font-family: monospace;
+        }
+        .tag-n { background: rgba(88, 166, 255, 0.15); color: var(--accent); }
+        .tag-v { background: rgba(252, 140, 255, 0.15); color: var(--accent-purple); }
+        .tag-x { background: rgba(252, 140, 255, 0.15); color: var(--accent-purple); }
+        .tag-i { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
+
+        /* Smooth Hide for Search */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>⚡ Neovim Maps</h2>
+        <ul>
+            <li><a href="#keymaps" class="active">core/keymaps.lua</a></li>
+            <li><a href="#fzf">plugins/fzf.lua</a></li>
+            <li><a href="#gitsigns">plugins/gitsigns.lua</a></li>
+            <li><a href="#lsp">plugins/lsp.lua</a></li>
+            <li><a href="#tree">plugins/tree.lua</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <div class="header">
+            <h1>Configuration Dashboard</h1>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search shortcuts or features...">
+            </div>
+        </div>
+
+        <div id="keymaps" class="section">
+            <div class="section-title">core/keymaps.lua (General Maps)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Mode</th>
+                        <th style="width: 25%;">Shortcut</th>
+                        <th>Action / Feature</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>j</kbd></td><td>Down (wrap-aware)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>k</kbd></td><td>Up (wrap-aware)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>c</kbd> or <kbd>nh</kbd></td><td>Clear search highlights</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>n</kbd> / <kbd>N</kbd></td><td>Next/Prev search result (centered)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Ctrl</kbd> + <kbd>d</kbd> / <kbd>u</kbd></td><td>Half page down/up (centered)</td></tr>
+                    <tr><td><span class="tag tag-x">X</span></td><td><kbd>Leader</kbd> + <kbd>p</kbd></td><td>Paste without yanking (void register)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span> <span class="tag tag-v">V</span></td><td><kbd>Leader</kbd> + <kbd>x</kbd></td><td>Delete without yanking</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>bn</kbd> / <kbd>bp</kbd></td><td>Next / Previous Buffer</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>bo</kbd></td><td>Close all buffers except current</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>bd</kbd></td><td>Close current buffer</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Ctrl</kbd> + <kbd>h/j/k/l</kbd></td><td>Window navigation (Left/Down/Up/Right)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>sv</kbd> / <kbd>sh</kbd></td><td>Split Window (Vertically / Horizontally)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>se</kbd> / <kbd>sx</kbd></td><td>Equalize splits / Close current split</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Ctrl</kbd> + <kbd>Arrows</kbd></td><td>Resize split windows</td></tr>
+                    <tr><td><span class="tag tag-n">N</span> <span class="tag tag-v">V</span></td><td><kbd>Alt</kbd> + <kbd>j/k</kbd></td><td>Move line / selection down or up</td></tr>
+                    <tr><td><span class="tag tag-v">V</span></td><td><kbd>&lt;</kbd> / <kbd>&gt;</kbd></td><td>Indent left/right and keep visual selection</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>J</kbd></td><td>Join lines and keep cursor position</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>pa</kbd></td><td>Copy full current file path to clipboard</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>td</kbd></td><td>Toggle Diagnostics (On/Off)</td></tr>
+                    <tr><td><span class="tag tag-i">I</span></td><td><kbd>j</kbd><kbd>k</kbd> / <kbd>k</kbd><kbd>j</kbd></td><td>Fast escape to Normal Mode</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>+</kbd> / <kbd>-</kbd></td><td>Increment / Decrement number under cursor</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>to</kbd> / <kbd>tx</kbd></td><td>Tab Management: Open new tab / Close tab</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>tn</kbd> / <kbd>tp</kbd></td><td>Tab Management: Next tab / Previous tab</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>tf</kbd></td><td>Open current buffer in a standalone new tab</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>jt</kbd> / <kbd>jf</kbd> / <kbd>jd</kbd></td><td>Insert JSDoc templates (Type, Function, Typedef)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>wc</kbd> / <kbd>wa</kbd></td><td>Insert Web Component Boilplates / Attribute Observers</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Ctrl</kbd> + <kbd>a</kbd></td><td>Select everything inside the file</td></tr>
+                    <tr><td><span class="tag tag-i">I</span></td><td><kbd>Tab</kbd></td><td>Force insert literal Tab character</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>z</kbd><kbd>h</kbd> / <kbd>z</kbd><kbd>l</kbd></td><td>Move screen view horizontally left/right</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="fzf" class="section">
+            <div class="section-title">plugins/fzf.lua (FZF-Lua Navigation)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Mode</th>
+                        <th style="width: 25%;">Shortcut</th>
+                        <th>Action / Feature</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>ff</kbd></td><td>FZF Files Search</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>fg</kbd></td><td>FZF Live Grep across project</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>Leader</kbd></td><td>FZF Active Buffers list</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>fh</kbd></td><td>FZF Help Tags lookup</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>fx</kbd> / <kbd>fX</kbd></td><td>FZF Document / Workspace Diagnostics</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="gitsigns" class="section">
+            <div class="section-title">plugins/gitsigns.lua (Git Integration)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Mode</th>
+                        <th style="width: 25%;">Shortcut</th>
+                        <th>Action / Feature</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>]</kbd><kbd>h</kbd> / <kbd>[</kbd><kbd>h</kbd></td><td>Jump to Next / Previous git hunk</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>hs</kbd> / <kbd>hr</kbd></td><td>Stage Hunk / Reset Hunk</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>hp</kbd></td><td>Preview Hunk inline</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>hb</kbd></td><td>Full Line Git Blame popup</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>hB</kbd></td><td>Toggle permanent current-line blame</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>hd</kbd></td><td>Diff against index via Diffthis</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="lsp" class="section">
+            <div class="section-title">plugins/lsp.lua (LSP, Blink.cmp & Diagnostics)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Mode</th>
+                        <th style="width: 25%;">Shortcut</th>
+                        <th>Action / Feature</th>
+                    </tr>
+                </thead>
+                <tbody class="searchable">
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>gd</kbd> / <kbd>fd</kbd></td><td>LSP Definitions (FZF floating window)</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>gD</kbd></td><td>LSP Jump to definition</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>gS</kbd></td><td>Open definition in a Vertical Split</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>ca</kbd></td><td>LSP Code Action list</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>rn</kbd></td><td>LSP Smart Rename symbols</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>D</kbd> / <kbd>d</kbd></td><td>Show diagnostics under line / cursor</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>nd</kbd> / <kbd>pd</kbd></td><td>Jump to Next / Previous Diagnostic item</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>K</kbd></td><td>Hover documentation lookup</td></tr>
+                    <tr><td><span class="tag tag-n">N</span></td><td><kbd>Leader</kbd> + <kbd>fr</

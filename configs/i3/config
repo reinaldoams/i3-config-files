@@ -1,4 +1,4 @@
-Set $mod Mod4
+set $mod Mod4
 
 font pango:FiraCode Nerd Font 15
 
@@ -15,6 +15,15 @@ exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-2.png
 
 # setting keyboard layout
 exec --no-startup-id setxkbmap -layout us -variant intl
+
+# setting picom compositor
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
+
+# setting polybar
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
+# setting parcellite clipboard manager
+exec --no-startup-id parcellite
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -130,38 +139,24 @@ bindsym $mod+Control Down  resize shrink height 5 px or 5 ppt
 bindsym Print exec --no-startup-id flameshot gui
 
 # class                 border    bground   text      indicator child_border
-client.focused          #6272A4   #6272A4   #F8F8F2   #FFFF00   #BD93F9
+client.focused          #6272A4   #6272A4   #F8F8F2   #FFFF00   #777777
 client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #44475A
 client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #282A36
 client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
 client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
 client.background                 #F8F8F2
 
-# i3bar configuration
-bar {
-    status_command i3status | i3status-title-on-bar --color '#FFB86C'
-    position top
-
-     colors {
-        background       #282A36
-        statusline       #F8F8F2
-        separator        #44475A
-
-        # class            border    bground   text
-        focused_workspace  #44475A   #44475A   #F8F8F2
-        active_workspace   #282A36   #44475A   #F8F8F2
-        inactive_workspace #282A36   #282A36   #BFBFBF
-        urgent_workspace   #FF5555   #FF5555   #F8F8F2
-        binding_mode       #FF5555   #FF5555   #F8F8F2
-    }
-}
-
 # styling windows borders
 for_window [class="^.*"] border pixel 3
 # adding a little margin around windows
-gaps inner 4
+gaps inner 5
 
 # Making pop-up windows of some programs floating enable
 for_window [class="Steam"] floating enable
 for_window [class="steamwebhelper"] floating enable
 for_window [class="qBittorrent" title="^Add New Torrent$"] floating enable
+for_window [class="^Wine$"] floating enable
+for_window [class="^Reaper$"] floating enable
+for_window [class="wine"] floating enable
+for_window [class="Wine"] floating enable
+

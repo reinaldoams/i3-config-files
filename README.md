@@ -17,6 +17,8 @@ Used programs (that didnt come from Fedora i3 Spin):
 - nvim (some shortcuts open nvim)
 - brave-browser (or use another browser and update the key binding command in i3 config)
 - heroic (there is a shortcut added in .bashrc)
+- polybar:
+- parcellite
 
 Additional steps:
 - adding name of currently open window to i3status bar:

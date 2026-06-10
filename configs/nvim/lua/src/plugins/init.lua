@@ -1,0 +1,8 @@
+require("src.plugins.devicons")
+require("src.plugins.treesitter")
+require("src.plugins.tree")
+require("src.plugins.fzf")
+require("src.plugins.mini")
+require("src.plugins.gitsigns")
+require("src.plugins.mason")
+require("src.plugins.lsp")
