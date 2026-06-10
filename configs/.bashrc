@@ -19,14 +19,16 @@ alias configi3status="nvim ~/.config/i3status/config"
 alias configbashrc="nvim ~/.bashrc"
 alias confignvim="nvim ~/.config/nvim/init.lua"
 alias heroic="flatpak run com.heroicgameslauncher.hgl"
+alias btop="sudo btop"
 
 # git alias
 alias gs-="git status"
 alias gd-="git diff --ignore-all-space"
 alias ga-="git add"
-alias gco-"git commit"
+alias gco-="git commit"
 alias gps-="git push"
 alias gpl-="git pull"
+alias gl-="git log"
 
 # User specific aliases and functions
 if [ -d ~/.bashrc.d ]; then
@@ -37,3 +39,4 @@ if [ -d ~/.bashrc.d ]; then
     done
 fi
 unset rc
+export PATH="$PATH:$HOME/.local/share/yabridge"
