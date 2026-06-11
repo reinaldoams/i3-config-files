@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yabridge on Fedora 44 i3 Spin — Setup Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg:        #0f1117;
+      --surface:   #181c27;
+      --border:    #262b3a;
+      --muted:     #3a4055;
+      --text:      #c8cdd8;
+      --text-dim:  #6b7280;
+      --text-head: #e8eaf0;
+      --amber:     #f0a030;
+      --amber-dim: #a06820;
+      --green:     #4ade80;
+      --red:       #f87171;
+      --blue:      #60a5fa;
+      --code-bg:   #0a0d14;
+      --nav-w:     220px;
+      --content-w: 760px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── LAYOUT ─────────────────────────────────────────────── */
+    .layout {
+      display: flex;
+      max-width: calc(var(--nav-w) + var(--content-w) + 80px);
+      margin: 0 auto;
+      padding: 0 24px;
+      gap: 0;
+    }
+
+    /* ── LEFT NAV ───────────────────────────────────────────── */
+    .sidenav {
+      width: var(--nav-w);
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 48px 24px 48px 0;
+      border-right: 1px solid var(--border);
+    }
+
+    .sidenav-logo {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidenav-logo::before {
+      content: '▶';
+      font-size: 8px;
+    }
+
+    .sidenav nav {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .nav-group-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 20px 0 6px;
+      padding-left: 10px;
+    }
+
+    .sidenav a {
+      font-size: 12.5px;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
+    }
+
+    .sidenav a:hover { color: var(--text); background: var(--surface); }
+    .sidenav a.active { color: var(--amber); background: rgba(240,160,48,0.08); }
+
+    .sidenav a .step-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px;
+      color: var(--amber-dim);
+      min-width: 18px;
+    }
+
+    /* ── MAIN CONTENT ───────────────────────────────────────── */
+    .main {
+      flex: 1;
+      min-width: 0;
+      padding: 48px 0 80px 48px;
+    }
+
+    /* ── HERO ───────────────────────────────────────────────── */
+    .hero {
+      margin-bottom: 56px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-head);
+      line-height: 1.25;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-sub {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      background: var(--surface);
+    }
+
+    .tag.ok    { border-color: rgba(74,222,128,0.3); color: var(--green); background: rgba(74,222,128,0.06); }
+    .tag.warn  { border-color: rgba(240,160,48,0.3); color: var(--amber); background: rgba(240,160,48,0.06); }
+    .tag.error { border-color: rgba(248,113,113,0.3); color: var(--red);   background: rgba(248,113,113,0.06); }
+
+    /* ── WHAT IS YABRIDGE ───────────────────────────────────── */
+    .intro-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--amber);
+      border-radius: 6px;
+      padding: 20px 24px;
+      margin-bottom: 48px;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .intro-box strong {
+      color: var(--text-head);
+      font-weight: 600;
+    }
+
+    /* ── SECTION ────────────────────────────────────────────── */
+    .section { margin-bottom: 56px; }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--amber);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      min-width: 40px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-head);
+      letter-spacing: -0.01em;
+    }
+
+    .section h3 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dim);
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 24px 0 10px;
+    }
+
+    .section p { margin-bottom: 12px; font-size: 14px; }
+
+    /* ── WHEN-NECESSARY BADGE ───────────────────────────────── */
+    .when-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 12px;
+      color: var(--text-dim);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 5px 12px;
+      margin-bottom: 16px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    .when-badge::before {
+      content: 'WHEN';
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    /* ── CODE BLOCKS ────────────────────────────────────────── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      margin: 12px 0 20px;
+      overflow: hidden;
+    }
+
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7px 16px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .code-lang {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .copy-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      color: var(--text-dim);
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .copy-btn:hover { color: var(--amber); border-color: var(--amber-dim); }
+    .copy-btn.copied { color: var(--green); border-color: rgba(74,222,128,0.4); }
+
+    .code-block pre {
+      padding: 16px 20px;
+      overflow-x: auto;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    .code-block pre .comment { color: var(--text-dim); }
+    .code-block pre .cmd     { color: var(--amber); }
+
+    /* ── INLINE CODE ────────────────────────────────────────── */
+    code {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 1px 6px;
+      color: var(--amber);
+    }
+
+    /* ── CALLOUTS ───────────────────────────────────────────── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 13.5px;
+      border: 1px solid;
+    }
+
+    .callout-icon {
+      font-size: 14px;
+      margin-top: 1px;
+      flex-shrink: 0;
+    }
+
+    .callout.info   { background: rgba(96,165,250,0.06);  border-color: rgba(96,165,250,0.25);  color: #93c5fd; }
+    .callout.warn   { background: rgba(240,160,48,0.06);  border-color: rgba(240,160,48,0.25);  color: #fcd34d; }
+    .callout.danger { background: rgba(248,113,113,0.06); border-color: rgba(248,113,113,0.25); color: #fca5a5; }
+    .callout.tip    { background: rgba(74,222,128,0.06);  border-color: rgba(74,222,128,0.25);  color: #86efac; }
+
+    /* ── KNOWN ISSUES ───────────────────────────────────────── */
+    .issue-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 20px;
+    }
+
+    .issue-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--red);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .issue-title::before { content: '✗'; font-family: monospace; }
+
+    .issue-card p { font-size: 13.5px; margin-bottom: 10px; }
+
+    .issue-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      margin: 14px 0 6px;
+    }
+
+    .issue-card a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 13px;
+      font-family: 'IBM Plex Mono', monospace;
+      word-break: break-all;
+    }
+    .issue-card a:hover { text-decoration: underline; }
+
+    /* ── SUMMARY TABLE ──────────────────────────────────────── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .summary-card h3 {
+      font-size: 11px;
+      font-family: 'IBM Plex Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      color: var(--text-dim) !important;
+    }
+
+    .status-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .dot { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+    .dot.ok   { color: var(--green); }
+    .dot.fail { color: var(--red);   }
+
+    .component-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .component-table th {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .component-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid rgba(38,43,58,0.5);
+      color: var(--text);
+    }
+
+    .component-table tr:last-child td { border-bottom: none; }
+
+    .component-table td:first-child { color: var(--text-head); font-weight: 500; }
+    .component-table td:nth-child(2) {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--amber);
+    }
+
+    .component-table td:last-child {
+      font-size: 11.5px;
+      color: var(--text-dim);
+    }
+
+    /* ── DIVIDER ────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 40px 0;
+    }
+
+    /* ── FOOTER ─────────────────────────────────────────────── */
+    .footer {
+      padding: 24px 0 0;
+      border-top: 1px solid var(--border);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* ── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 780px) {
+      .layout { flex-direction: column; padding: 0 16px; }
+      .sidenav { display: none; }
+      .main { padding: 32px 0 60px; }
+      .hero h1 { font-size: 22px; }
+      .summary-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidenav" id="sidenav">
+    <div class="sidenav-logo">yabridge</div>
+    <nav>
+      <div class="nav-group-label">Overview</div>
+      <a href="#intro">Introduction</a>
+      <a href="#context">System context</a>
+
+      <div class="nav-group-label">Installation</div>
+      <a href="#step1"><span class="step-num">01</span> Wine Staging</a>
+      <a href="#step2"><span class="step-num">02</span> yabridge binary</a>
+      <a href="#step3"><span class="step-num">03</span> Windows plugins</a>
+      <a href="#step4"><span class="step-num">04</span> Add directories</a>
+      <a href="#step5"><span class="step-num">05</span> Sync plugins</a>
+      <a href="#step6"><span class="step-num">06</span> Configure Reaper</a>
+      <a href="#step7"><span class="step-num">07</span> DXVK</a>
+      <a href="#step8"><span class="step-num">08</span> i3 float rules</a>
+      <a href="#step9"><span class="step-num">09</span> yabridge.toml</a>
+
+      <div class="nav-group-label">Reference</div>
+      <a href="#issues">Known issues</a>
+      <a href="#summary">Summary</a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- HERO -->
+    <section class="hero" id="intro">
+      <div class="hero-eyebrow">Setup Documentation · June 2025</div>
+      <h1>Yabridge on Fedora 44<br/>i3 Spin</h1>
+      <p class="hero-sub">A practical guide based on a real installation session. Documents what worked, what didn't, and known limitations.</p>
+      <div class="hero-tags">
+        <span class="tag">Fedora 44</span>
+        <span class="tag">i3wm</span>
+        <span class="tag">Reaper</span>
+        <span class="tag">VST3</span>
+        <span class="tag ok">Audio working</span>
+        <span class="tag ok">GUI working</span>
+        <span class="tag warn">Mouse workaround needed</span>
+      </div>
+    </section>
+
+    <!-- WHAT IS YABRIDGE -->
+    <div class="intro-box">
+      <strong>What is yabridge?</strong> Yabridge lets you use Windows VST2, VST3, and CLAP plugins in Linux DAWs (like Reaper, Ardour, Bitwig) by bridging them through Wine. The plugin appears to your DAW as a native Linux plugin.
+    </div>
+
+    <!-- SYSTEM CONTEXT -->
+    <section class="section" id="context">
+      <div class="section-header">
+        <div class="section-num">SYS</div>
+        <h2>System Context</h2>
+      </div>
+      <table class="component-table" style="margin-bottom:0">
+        <thead>
+          <tr><th>Item</th><th>Value</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>OS</td><td>Fedora 44 i3 Spin</td><td>i3 window manager</td></tr>
+          <tr><td>DAW</td><td>Reaper</td><td></td></tr>
+          <tr><td>Plugin type tested</td><td>VST3</td><td>Neural DSP Archetype Mateus Asato</td></tr>
+          <tr><td>Plugin installed via</td><td>.exe installer</td><td>Run through Wine</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <hr class="divider"/>
+
+    <!-- STEP 1 -->
+    <section class="section" id="step1">
+      <div class="section-header">
+        <div class="section-num">STEP 01</div>
+        <h2>Install Wine Staging from WineHQ</h2>
+      </div>
+      <div class="when-badge">Always required — yabridge needs a recent Wine Staging build</div>
+      <p>Fedora's default Wine from <code>dnf install wine</code> works for installation but has a known mouse click regression. Use WineHQ's build instead.</p>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <div>On Fedora 44, the <code>--add-repo</code> flag doesn't exist. Use <code>addrepo</code> (without the dashes) instead.</div>
+      </div>
+
+      <h3>Add the WineHQ repository</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>sudo rpm --import https://dl.winehq.org/wine-builds/winehq.key
+
+sudo dnf config-manager addrepo \
+  --from-repofile=https://dl.winehq.org/wine-builds/fedora/$(rpm -E %fedora)/winehq.repo
+
+sudo dnf install winehq-staging</pre>
+      </div>
+
+      <h3>Verify</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>wine --version
+<span class="comment"># Should show: wine-X.X (Staging)</span></pre>
+      </div>
+    </section>
+
+    <!-- STEP 2 -->
+    <section class="section" id="step2">
+      <div class="section-header">
+        <div class="section-num">STEP 02</div>
+        <h2>Install yabridge (prebuilt binary)</h2>
+      </div>
+      <div class="when-badge">Always required</div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <div>The <code>patrickl/yabridge</code> COPR does not support Fedora 44 as of June 2025. The prebuilt binary from GitHub is the only reliable method.</div>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>cd /tmp
+wget https://github.com/robbert-vdh/yabridge/releases/download/5.1.0/yabridge-5.1.0.tar.gz
+mkdir -p ~/.local/share
+tar -xzf /tmp/yabridge-5.1.0.tar.gz -C ~/.local/share</pre>
+      </div>
+
+      <h3>Add yabridgectl to PATH</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>echo 'export PATH="$PATH:$HOME/.local/share/yabridge"' >> ~/.bashrc
+source ~/.bashrc</pre>
+      </div>
+
+      <h3>Verify</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>yabridgectl --version
+<span class="comment"># Should show: yabridgectl 5.1.0</span></pre>
+      </div>
+    </section>
+
+    <!-- STEP 3 -->
+    <section class="section" id="step3">
+      <div class="section-header">
+        <div class="section-num">STEP 03</div>
+        <h2>Install Windows Plugins via Wine</h2>
+      </div>
+      <div class="when-badge">Only if you have Windows-only VST plugins</div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>wine /path/to/PluginInstaller.exe</pre>
+      </div>
+
+      <p>Plugins typically install to one of these Wine prefix paths:</p>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">paths</span>
+        </div>
+        <pre><span class="comment"># VST3</span>
+~/.wine/drive_c/Program Files/Common Files/VST3/
+
+<span class="comment"># VST2</span>
+~/.wine/drive_c/Program Files/VSTPlugins/
+
+<span class="comment"># Vendor-specific example</span>
+~/.wine/drive_c/Program Files/Neural DSP/</pre>
+      </div>
+    </section>
+
+    <!-- STEP 4 -->
+    <section class="section" id="step4">
+      <div class="section-header">
+        <div class="section-num">STEP 04</div>
+        <h2>Add Plugin Directories to yabridgectl</h2>
+      </div>
+      <div class="when-badge">Every time you add a new plugin directory</div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>yabridgectl add ~/.vst
+yabridgectl add "$HOME/.wine/drive_c/Program Files/Common Files/VST3"
+yabridgectl add "$HOME/.wine/drive_c/Program Files/Neural DSP"</pre>
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">✗</span>
+        <div>Always quote paths with spaces. Use <code>$HOME</code> or quotes — do <strong>not</strong> use backslash-escaped spaces, as they cause "directory not found" errors.</div>
+      </div>
+
+      <h3>Check registered directories</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>yabridgectl status</pre>
+      </div>
+    </section>
+
+    <!-- STEP 5 -->
+    <section class="section" id="step5">
+      <div class="section-header">
+        <div class="section-num">STEP 05</div>
+        <h2>Sync Plugins</h2>
+      </div>
+      <div class="when-badge">After adding directories, after installing new plugins, after updating yabridge</div>
+
+      <p>This creates the Linux bridge <code>.so</code> files next to your Windows DLLs. Your DAW will scan these and see the plugins as native Linux plugins.</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>yabridgectl sync</pre>
+      </div>
+    </section>
+
+    <!-- STEP 6 -->
+    <section class="section" id="step6">
+      <div class="section-header">
+        <div class="section-num">STEP 06</div>
+        <h2>Configure Reaper to Find Plugins</h2>
+      </div>
+      <div class="when-badge">First time only, or after adding new plugin directories</div>
+
+      <div class="callout tip">
+        <span class="callout-icon">✓</span>
+        <div>In this setup, Reaper found the plugins automatically after <code>yabridgectl sync</code> without any manual configuration.</div>
+      </div>
+
+      <p>If Reaper doesn't find them automatically, add the directories manually via:</p>
+      <p><strong>Options → Preferences → Plug-ins → VST</strong></p>
+    </section>
+
+    <!-- STEP 7 -->
+    <section class="section" id="step7">
+      <div class="section-header">
+        <div class="section-num">STEP 07</div>
+        <h2>Install DXVK</h2>
+      </div>
+      <div class="when-badge">If the plugin GUI is black, not updating when moved, or visually glitching</div>
+
+      <p>DXVK was needed in this setup to fix the UI redraw bug.</p>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>sudo dnf install wine-dxvk
+wineboot --init
+yabridgectl sync</pre>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ</span>
+        <div>The Fedora 44 <code>wine-dxvk</code> package integrates automatically — no setup script needed. The DLLs are placed directly into the Wine system directory.</div>
+      </div>
+    </section>
+
+    <!-- STEP 8 -->
+    <section class="section" id="step8">
+      <div class="section-header">
+        <div class="section-num">STEP 08</div>
+        <h2>i3: Make Plugin Windows Float</h2>
+      </div>
+      <div class="when-badge">Required on i3 and other tiling window managers</div>
+
+      <p>Without this, plugin windows get tiled, which interferes with input handling.</p>
+
+      <h3>Add to ~/.config/i3/config</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">i3 config</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>for_window [class="wine"] floating enable
+for_window [class="Wine"] floating enable</pre>
+      </div>
+
+      <h3>Reload i3</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">keybind</span>
+        </div>
+        <pre>$mod + Shift + r</pre>
+      </div>
+    </section>
+
+    <!-- STEP 9 -->
+    <section class="section" id="step9">
+      <div class="section-header">
+        <div class="section-num">STEP 09</div>
+        <h2>yabridge.toml Configuration</h2>
+      </div>
+      <div class="when-badge">If mouse clicks don't register inside the plugin GUI</div>
+
+      <h3>Create ~/.config/yabridge/yabridge.toml</h3>
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">toml</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>[defaults]
+editor-force-dnd = true
+editor-xembed = false
+hide-daw = false
+
+[compatibility]
+editor-coordinate-hack = true
+input-event-filter = false</pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">
+          <span class="code-lang">bash</span>
+          <button class="copy-btn" onclick="copyCode(this)">copy</button>
+        </div>
+        <pre>yabridgectl sync</pre>
+      </div>
+
+      <div class="callout warn">
+        <span class="callout-icon">⚠</span>
+        <div>All keys must use hyphens (<code>editor-force-dnd</code>), not underscores (<code>editor_force_dnd</code>). Mixed syntax is silently ignored.</div>
+      </div>
+    </section>
+
+    <hr class="divider"/>
+
+    <!-- KNOWN ISSUES -->
+    <section class="section" id="issues">
+      <div class="section-header">
+        <div class="section-num">REF</div>
+        <h2>Known Issues &amp; Limitations</h2>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-title">Mouse clicks only work at top-left corner</div>
+        <div class="issue-label">Root cause</div>
+        <p>A regression introduced in Wine 9.22 that breaks mouse coordinate mapping for embedded plugin windows. All Wine versions from 9.22 onward (including 10.x and 11.x) are affected.</p>
+        <div class="issue-label">Proper fix</div>
+        <p>Wine built with the "vulkan childwindow patch" (wine-tkg). The <code>patrickl/wine-tkg</code> COPR provides this for Fedora, but only up to Fedora 43.</p>
+        <div class="issue-label">Current workaround</div>
+        <p>Keep the plugin window positioned at the top-left corner of the screen. Mouse clicks work correctly there due to coordinate offset behavior.</p>
+        <div class="issue-label">Attempted fix — Kron4ek wine-tkg 9.21</div>
+        <div class="code-block" style="margin-top:6px">
+          <div class="code-block-header">
+            <span class="code-lang">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          </div>
+          <pre>cd /opt
+sudo wget https://github.com/Kron4ek/Wine-Builds/releases/download/9.21/wine-9.21-staging-tkg-amd64.tar.xz
+sudo tar -xJf wine-9.21-staging-tkg-amd64.tar.xz
+sudo mv wine-9.21-staging-tkg-amd64 wine-tkg-9.21
+yabridgectl set --wine-home /opt/wine-tkg-9.21/bin
+yabridgectl sync</pre>
+        </div>
+        <div class="callout danger" style="margin-top:12px">
+          <span class="callout-icon">✗</span>
+          <div>Binary extracted correctly, but yabridge continued using system Wine 11.0. The <code>set --wine-home</code> command did not persist. Needs further investigation.</div>
+        </div>
+        <div class="issue-label">Track upstream</div>
+        <a href="https://github.com/robbert-vdh/yabridge/issues/382">github.com/robbert-vdh/yabridge/issues/382</a><br/>
+        <a href="https://copr.fedorainfracloud.org/coprs/patrickl/wine-tkg/" style="margin-top:4px;display:inline-block">copr.fedorainfracloud.org/coprs/patrickl/wine-tkg/</a>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-title">Child/dropdown windows open behind the plugin window</div>
+        <div class="issue-label">Root cause</div>
+        <p>Same Wine childwindow regression as above.</p>
+        <div class="issue-label">Workaround</div>
+        <p>When a dropdown or child window opens behind the plugin, move the front window aside, interact with the child window, then move the front window back to top-left to continue.</p>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-title">patrickl/yabridge COPR not available for Fedora 44</div>
+        <p>The COPR only has builds up to Fedora 43. Using the prebuilt binary from GitHub releases (Step 2) is the correct workaround.</p>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-title">patrickl/wine-tkg COPR not available for Fedora 44</div>
+        <p>Only Fedora 42 and 43 are supported. Manually adding the fc43 repo and forcing the install fails — the sub-packages (<code>wine-core</code>, <code>wine-cms</code>, etc.) are not built for fc43 in that COPR, causing unresolvable dependencies.</p>
+      </div>
+
+      <div class="issue-card">
+        <div class="issue-title">WineHQ repo syntax difference on Fedora 44</div>
+        <p>The standard <code>dnf config-manager --add-repo</code> flag does not exist. Use <code>addrepo --from-repofile=</code> instead (see Step 1).</p>
+      </div>
+    </section>
+
+    <hr class="divider"/>
+
+    <!-- SUMMARY -->
+    <section class="section" id="summary">
+      <div class="section-header">
+        <div class="section-num">REF</div>
+        <h2>Summary</h2>
+      </div>
+
+      <table class="component-table" style="margin-bottom:28px">
+        <thead>
+          <tr><th>Component</th><th>Version</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Wine</td><td>11.0 Staging</td><td>WineHQ repo</td></tr>
+          <tr><td>wine-dxvk</td><td>2.7.1</td><td>Fedora default repo</td></tr>
+          <tr><td>yabridge</td><td>5.1.0</td><td>GitHub prebuilt binary</td></tr>
+          <tr><td>yabridgectl</td><td>5.1.0</td><td>GitHub prebuilt binary</td></tr>
+          <tr><td>wine-tkg 9.21</td><td>9.21</td><td>Kron4ek builds (not active)</td></tr>
+        </tbody>
+      </table>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h3>What works</h3>
+          <div class="status-item"><span class="dot ok">●</span> VST3 plugins load and produce audio in Reaper</div>
+          <div class="status-item"><span class="dot ok">●</span> Plugin GUI opens and renders correctly (with DXVK)</div>
+          <div class="status-item"><span class="dot ok">●</span> Mouse clicks work when plugin window is at top-left</div>
+          <div class="status-item"><span class="dot ok">●</span> Plugin discovered automatically after <code>yabridgectl sync</code></div>
+        </div>
+        <div class="summary-card">
+          <h3>Needs improvement</h3>
+          <div class="status-item"><span class="dot fail">●</span> Mouse clicks only work at top-left (Wine 9.22+ regression)</div>
+          <div class="status-item"><span class="dot fail">●</span> Child/dropdown windows open behind the plugin</div>
+          <div class="status-item"><span class="dot fail">●</span> wine-tkg 9.21 downloaded but not being used by yabridge</div>
+          <div class="status-item"><span class="dot fail">●</span> Both <code>patrickl</code> COPRs need Fedora 44 builds</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>yabridge · Fedora 44 i3 Spin</span>
+      <span>Documented June 2025</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // ── Copy button ──────────────────────────────────────────────
+  function copyCode(btn) {
+    const pre = btn.closest('.code-block').querySelector('pre');
+    const text = pre.innerText;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'copied';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 1800);
+    });
+  }
+
+  // ── Active nav highlighting on scroll ───────────────────────
+  const sections = document.querySelectorAll('[id]');
+  const navLinks = document.querySelectorAll('.sidenav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.sidenav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
