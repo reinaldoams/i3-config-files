@@ -17,7 +17,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id gammastep -P -O 3000
 
 # setting wallpaper
-exec --no-startup-id feh --bg-fill ~/Documents/wallpaper.png
+exec --no-startup-id feh --bg-fill ~/.config/feh/wallpaper-99x.png
 
 # setting keyboard layout (re-applied after autostart/xrandr, which can reset XKB)
 exec --no-startup-id setxkbmap -layout us -variant intl
@@ -35,7 +35,7 @@ exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/keep-screen-on.sh
 exec --no-startup-id sh -c 'sleep 5; /home/reinaldo/.config/i3/scripts/keep-screen-on.sh'
 
 # external monitor only at login ($mod+p toggles displays, $mod+Shift+p for both)
-exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --auto --output eDP-1 --off && setxkbmap -layout us -variant intl && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && i3-msg workspace number 1'
+exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off && setxkbmap -layout us -variant intl && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && i3-msg workspace number 1'
 
 # add wifi password to the connection with nmcli (run this command in the terminal):
 # nmcli connection modify "WIFI_NAME" wifi-sec.psk "YOUR_WIFI_PASSWORD"
@@ -105,7 +105,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # enable both displays
-bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --auto --left-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && notify-send -t 1500 "Display" "Both screens"'
+bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1440 --rate 144 --right-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && notify-send -t 1500 "Display" "Both screens"'
 # toggle between built-in and external display
 bindsym $mod+p exec --no-startup-id /home/reinaldo/.config/i3/scripts/toggle-display.sh
 

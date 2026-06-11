@@ -8,7 +8,7 @@ mkdir -p "$(dirname "$STATE_FILE")"
 
 mode=$(cat "$STATE_FILE" 2>/dev/null || echo "external")
 if [ "$mode" = "laptop" ]; then
-  xrandr --output "$EXTERNAL" --primary --auto --output "$LAPTOP" --off
+  xrandr --output "$EXTERNAL" --primary --mode 2560x1440 --rate 180 --output "$LAPTOP" --off
   notify-send -t 1500 "Display" "External only"
   echo "external" > "$STATE_FILE"
 else
