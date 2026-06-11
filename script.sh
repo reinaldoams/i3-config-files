@@ -23,3 +23,5 @@ rsync -a $EXCLUDES ~/.config/MangoHud/ ./configs/MangoHud/
 echo 'imported MangoHud configs'
 rsync -a ~/.bashrc ./configs/.bashrc
 echo 'imported .bashrc'
+rsync -a ~/.bash_profile ./configs/.bash_profile
+echo 'imported .bash_profile'

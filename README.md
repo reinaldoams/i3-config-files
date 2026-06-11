@@ -36,5 +36,7 @@ Additional steps:
 - xdg-desktop-portal-gtk should be installed (sudo dnf install) to make flatpak apps to open things outside their sandbox (like a browser opening folder where a downloaded file is located)
 - setting default browser command:
 	`xdg-settings set default-web-browser net.waterfox.waterfox.desktop`
+- fixing cedilla (portuguese):
+	`sudo sed -i 's/"cedilla" "Cedilla" "gtk30" "gnome-look" "az:ca:co:fr:gv:it:ro:tr:wa"/"cedilla" "Cedilla" "gtk30" "gnome-look" "az:ca:co:fr:gv:it:ro:tr:wa:en"/g' /usr/lib64/gtk-3.0/3.0.0/immodules.cache`
 yabridge note:
 - don't use flatpak to install the DAW to prevent files access issues when syncing plugins
