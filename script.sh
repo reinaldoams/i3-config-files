@@ -1,18 +1,23 @@
-cp -r ~/.config/gtk-3.0/ ./configs/gtk-3.0/
+if [ -d "./configs" ]; then
+  echo "configs folder exists"
+else
+  mkdir configs
+  echo "configs folder created"
+fi
+EXCLUDES='--exclude=.git --exclude=.gitignore --exclude=.gitmodules'
+rsync -a $EXCLUDES ~/.config/gtk-3.0/ ./configs/gtk-3.0/
 echo 'imported gtk configs'
-
-cp -r ~/.config/i3/ ./configs/i3/
+rsync -a $EXCLUDES ~/.config/i3/ ./configs/i3/
 echo 'imported i3 configs'
-
-cp -r ~/.config/i3status/ ./configs/i3status/
+rsync -a $EXCLUDES ~/.config/i3status/ ./configs/i3status/
 echo 'imported i3status configs'
-
-cp -r ~/.config/nvim/ ./configs/nvim/
+rsync -a $EXCLUDES ~/.config/nvim/ ./configs/nvim/
 echo 'imported nvim configs'
-
-cp -r ~/.config/polybar/ ./configs/polybar/
-echo 'imported polybar configs'
-
-cp -r ~/.config/picom/ ./configs/picom/
-echo 'imported picom configs'
-
+#rsync -a $EXCLUDES ~/.config/polybar/ ./configs/polybar/
+#echo 'imported polybar configs'
+#rsync -a $EXCLUDES ~/.config/picom/ ./configs/picom/
+#echo 'imported picom configs'
+#rsync -a $EXCLUDES ~/.config/MangoHud/ ./configs/MangoHud/
+#echo 'imported MangoHud configs'
+rsync -a ~/.bashrc ./configs/.bashrc
+echo 'imported .bashrc'

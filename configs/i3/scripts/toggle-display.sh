@@ -18,3 +18,4 @@ else
 fi
 
 /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh
+/home/reinaldo/.config/i3/scripts/keep-screen-on.sh

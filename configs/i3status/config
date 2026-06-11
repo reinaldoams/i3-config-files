@@ -14,20 +14,21 @@ general {
         markup = "pango"            # Enables individual color wrapping
         
         # Fallback Dracula Colors
-        color_good = "#50FA7B"      # Green
-        color_degraded = "#F1FA8C"  # Yellow
-        color_bad = "#FF5555"       # Red
+        # color_good = "#50FA7B"      # Green
+        # color_degraded = "#F1FA8C"  # Yellow
+        # color_bad = "#FF5555"       # Red
 }
 
 order += "memory"
 order += "cpu_usage"
+# order += "wireless _first_"
 order += "volume master"
 order += "tztime date"
 order += "tztime time"
 
 wireless _first_ {
-        format_up = "W: (%quality at %essid) %ip"
-        format_down = "W: down"
+        format_up = "📶%essid"
+        format_down = "📶 down"
 }
 
 ethernet _first_ {
@@ -49,28 +50,27 @@ load {
 
 memory {
         # Cyan
-        format = "<span color='#F1FA8C'>%used/%total</span>"
+        format = "%used/%total"
         threshold_degraded = "1G"
-        format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
+        format_degraded = "MEMORY < %available"
 }
 
 cpu_usage {
         # Foreground color
-        format = "<span color='#F8F8F2'>🔲%usage</span>"
+        format = "🔲%usage"
 }
 
 volume master {
         # Orange color
-        format = "<span color='#FFB86C'>🔊%volume</span>"
-        format_muted = "<span color='#FF5555'>🔇%volume</span>"
+        format = "🔊%volume"
+        format_muted = "🔇%volume"
 }
 
 tztime date {
-        # Green
-        format = "<span color='#50FA7B'>%Y.%m.%d</span>"
+        format = "%d/%m/%y"
 }
 
 tztime time {
         # Current Line color
-        format = "<span color='#8BE9FD'>%H:%M</span>"
+        format = "%H:%M"
 }

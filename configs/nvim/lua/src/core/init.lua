@@ -1,4 +1,0 @@
-require("src.core.opts")
-require("src.core.keymaps")
-require("src.core.statusline")
-require("src.core.autocmd")
