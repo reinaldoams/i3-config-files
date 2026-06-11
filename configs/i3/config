@@ -25,6 +25,9 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 # setting parcellite clipboard manager
 exec --no-startup-id parcellite
 
+# use DisplayPort-0 display
+exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 180 --output HDMI-A-0 --off
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
@@ -36,7 +39,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
     notify-send -t 1000 "Volume" "Toggled mute"
 
 # open brave browser with Win + b
-bindsym $mod+b exec brave-browser
+bindsym $mod+b exec flatpak run net.waterfox.waterfox
 
 # screen lock shortcut
 bindsym $mod+l exec i3lock -i ~/Pictures/wallpaper-2.png
@@ -85,6 +88,12 @@ bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
+
+# use both displays
+bindsym $mod+Shift+p exec xrandr --output DisplayPort-0 --mode 2560x1440 --rate 165 --output HDMI-A-0 --mode 2560x1080 --rate 74.99 --right-of DisplayPort-0
+
+# toggle between displays
+bindsym $mod+p exec ~/.config/i3/toggle-display.sh
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
