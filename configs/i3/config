@@ -8,10 +8,12 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 exec --no-startup-id nm-applet
 
 # gammastep (night mode)
-exec --no-startup-id gammastep -P -O 3000
+exec --no-startup-id gammastep -P -O 3000		
 
 # setting wallpaper
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-2.png
+# exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png
+# setting video wallpaper
+exec_always --no-startup-id bash -c "xwinwrap -g 2560x1440+0+0 -fs -s -st -sp -b -nf -ov -- mpv -wid WID --loop-file --no-audio --no-osc --no-osd-bar --player-operation-mode=cplayer '/home/reinaldo/Videos/wallpaper-video.mp4' & sleep 1 && xdotool search --class 'xwinwrap' windowlower"
 
 # setting keyboard layout
 exec --no-startup-id setxkbmap -layout us -variant intl
@@ -38,8 +40,14 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && \
     notify-send -t 1000 "Volume" "Toggled mute"
 
-# open brave browser with Win + b
-bindsym $mod+b exec flatpak run net.waterfox.waterfox
+# open waterfox with Win + w
+bindsym $mod+w exec --no-startup-id flatpak run net.waterfox.waterfox
+
+# open firefox with Win + b
+bindsym $mod+b exec --no-startup-id firefox
+
+# open thunar file manager
+bindsym $mod+e exec --no-startup-id thunar
 
 # screen lock shortcut
 bindsym $mod+l exec i3lock -i ~/Pictures/wallpaper-lock.png
@@ -78,13 +86,13 @@ bindsym $mod+v split v
 bindsym $mod+semicolon split toggle
 
 # enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
+# bindsym $mod+f fullscreen toggle (inactive because Super+f now toggles floating mode)
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+Shift+slash layout toggle all
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+f floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
