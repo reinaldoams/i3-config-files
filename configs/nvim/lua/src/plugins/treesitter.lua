@@ -17,7 +17,6 @@ local setup_treesitter = function()
 		"rust",
 		"c",
 		"cpp",
-		"go",
 		"html",
 		"css",
 		"javascript",

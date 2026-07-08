@@ -11,9 +11,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id gammastep -P -O 3000		
 
 # setting wallpaper
-# exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png
-# setting video wallpaper
-exec_always --no-startup-id bash -c "xwinwrap -g 2560x1440+0+0 -fs -s -st -sp -b -nf -ov -- mpv -wid WID --loop-file --no-audio --no-osc --no-osd-bar --player-operation-mode=cplayer '/home/reinaldo/Videos/wallpaper-video.mp4' & sleep 1 && xdotool search --class 'xwinwrap' windowlower"
+exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png
 
 # setting keyboard layout
 exec --no-startup-id setxkbmap -layout us -variant intl
@@ -50,7 +48,7 @@ bindsym $mod+b exec --no-startup-id firefox
 bindsym $mod+e exec --no-startup-id thunar
 
 # screen lock shortcut
-bindsym $mod+l exec i3lock -i ~/Pictures/wallpaper-lock.png
+bindsym $mod+l exec --no-startup-id xsecurelock
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -61,8 +59,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 # kill focused window
 bindsym $mod+q kill
 
-# start i3-dmenu-desktop
-bindsym $mod+d exec "i3-dmenu-desktop"
+# start rofi
+bindsym $mod+d exec --no-startup-id rofi -show drun
 
 # change focus
 bindsym $mod+Left focus left
@@ -177,3 +175,5 @@ for_window [class="^Reaper$"] floating enable
 for_window [class="wine"] floating enable
 for_window [class="Wine"] floating enable
 
+# Disable X DPMS / screensaver idle blanking (xset package not required)
+exec --no-startup-id $HOME/.local/bin/disable-dpms

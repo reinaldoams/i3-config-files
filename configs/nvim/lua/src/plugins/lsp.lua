@@ -167,7 +167,6 @@ vim.lsp.config("lua_ls", {
 vim.lsp.config("pyright", {})
 vim.lsp.config("bashls", {})
 vim.lsp.config("ts_ls", {})
-vim.lsp.config("gopls", {})
 vim.lsp.config("clangd", {})
 
 do
@@ -196,7 +195,6 @@ do
 			"c",
 			"cpp",
 			"css",
-			"go",
 			"html",
 			"javascript",
 			"javascriptreact",
@@ -216,7 +214,6 @@ do
 		settings = {
 			languages = {
 				c = { clangfmt, cpplint },
-				go = { gofumpt, go_revive },
 				cpp = { clangfmt, cpplint },
 				css = { prettier_d },
 				html = { prettier_d },
@@ -243,7 +240,6 @@ vim.lsp.enable({
 	"pyright",
 	"bashls",
 	"ts_ls",
-	"gopls",
 	"clangd",
 	"efm",
 })
