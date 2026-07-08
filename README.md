@@ -36,3 +36,17 @@ Additional steps:
 
 yabridge note:
 - don't use flatpak to install the DAW to prevent files access issues when syncing plugins
+
+fixing wifi because of setup being i3 on top of debian kde:
+```
+# Replace CONN and WIFI_PASSWORD
+CONN="mineral_2.4"
+WIFI_PASSWORD='your-wifi-password'
+sudo nmcli connection modify "$CONN" \
+  802-11-wireless-security.psk "$WIFI_PASSWORD" \
+  802-11-wireless-security.psk-flags 0
+# Reload and reconnect
+sudo nmcli connection reload
+nmcli connection down "$CONN"
+nmcli connection up "$CONN"
+```
