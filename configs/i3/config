@@ -7,7 +7,7 @@ font pango:Cousine Nerd Font Mono 14
 exec --no-startup-id dex-autostart --autostart --environment i3
 
 # Export session env so dbus/systemd can launch GUI apps (e.g. Dolphin for "Show in folder")
-exec --no-startup-id sh -c 'export GTK_THEME=Breeze-Dark QT_QPA_PLATFORMTHEME=kde && dbus-update-activation-environment --systemd DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR XDG_CURRENT_DESKTOP GTK_THEME QT_QPA_PLATFORMTHEME'
+exec --no-startup-id sh -c 'export GTK_THEME=Breeze-Dark QT_QPA_PLATFORMTHEME=kde && dbus-update-activation-environment --systemd DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR XDG_CURRENT_DESKTOP XDG_SESSION_ID GTK_THEME QT_QPA_PLATFORMTHEME'
 exec --no-startup-id xsettingsd
 exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY
 exec --no-startup-id systemctl --user start dolphin-daemon.service
@@ -17,7 +17,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id gammastep -P -O 3000
 
 # setting keyboard layout (re-applied after autostart/xrandr, which can reset XKB)
-exec --no-startup-id setxkbmap -layout us -variant intl
+exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh
+exec --no-startup-id sh -c 'sleep 3; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh; sleep 5; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
 
 # flameshot daemon (re-checked on reload; dbus registration matters more than pgrep)
 exec --no-startup-id sh -c 'sleep 1; /home/reinaldo/.config/i3/scripts/flameshot-daemon.sh'
@@ -32,23 +33,32 @@ exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/keep-screen-on.sh
 exec --no-startup-id sh -c 'sleep 5; /home/reinaldo/.config/i3/scripts/keep-screen-on.sh'
 
 # external monitor only at login ($mod+p toggles displays, $mod+Shift+p for both)
-exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off && setxkbmap -layout us -variant intl && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && i3-msg workspace number 1'
+exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && i3-msg workspace number 1'
 
 # add wifi password to the connection with nmcli (run this command in the terminal):
 # nmcli connection modify "WIFI_NAME" wifi-sec.psk "YOUR_WIFI_PASSWORD"
 
 # auto-connect WiFi after NetworkManager is ready
-# exec --no-startup-id /home/reinaldo/.config/i3/scripts/connect-wifi.sh
+exec --no-startup-id /home/reinaldo/.config/i3/scripts/connect-wifi.sh
 
-# Use pactl to adjust volume in PulseAudio.
-set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && \
-    notify-send -t 1000 -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1) "Volume" ""
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && \
-    notify-send -t 1000 -h int:value:$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+(?=%)' | head -1) "Volume" ""
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && \
-    notify-send -t 1000 "Volume" "Toggled mute"
+# enable BT keyboard Consumer Control so media keys reach X/i3
+exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh
+exec --no-startup-id sh -c 'sleep 3; /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh; sleep 8; /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh'
+# media keys (volume, brightness, playback)
+bindsym XF86AudioRaiseVolume  exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-up'
+bindsym XF86AudioLowerVolume  exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-down'
+bindsym XF86AudioMute         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-mute'
+# SINO WEALTH BT keyboard: Fn+F10/F11/F12 (mute / vol down / vol up) as F-keys when they reach X
+bindsym F10 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-mute'
+bindsym F11 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-down'
+bindsym F12 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-up'
+bindsym XF86AudioMicMute      exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh mic-mute'
+bindsym XF86AudioPlay         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh play-pause'
+bindsym XF86AudioNext         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh next'
+bindsym XF86AudioPrev         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh prev'
+bindsym XF86AudioStop         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh stop'
+bindsym XF86MonBrightnessUp   exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh brightness-up'
+bindsym XF86MonBrightnessDown exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh brightness-down'
 
 # open google chrome with Win + b
 bindsym $mod+b exec google-chrome
@@ -67,6 +77,9 @@ bindsym $mod+q kill
 
 # start i3-dmenu-desktop
 bindsym $mod+d exec "i3-dmenu-desktop"
+
+# start thuner
+bindsym $mod+e exec thunar
 
 # change focus
 bindsym $mod+Left focus left
@@ -102,7 +115,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # enable both displays
-bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1440 --rate 144 --right-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && notify-send -t 1500 "Display" "Both screens" && setxkbmap -layout us -variant intl'
+bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1440 --rate 144 --right-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh && notify-send -t 1500 "Display" "Both screens"'
 # toggle between built-in and external display
 bindsym $mod+p exec --no-startup-id /home/reinaldo/.config/i3/scripts/toggle-display.sh
 
