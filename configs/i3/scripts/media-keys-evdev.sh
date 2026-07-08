@@ -1,5 +1,7 @@
 #!/bin/bash
-# Read Fn+media keys from BT Consumer Control (never reaches X/xev).
+# Read Fn+media keys from BT Consumer Control when they never reach X/xev.
+# Fn+F10/F11/F12 on the main keyboard interface should use KEY_VOLUME* scancodes
+# and are handled by the XF86Audio* bindsyms in i3 instead.
 # Requires: sudo usermod -aG input "$USER"  then log out and back in.
 
 MEDIA_SCRIPT="/home/reinaldo/.config/i3/scripts/media-keys.sh"

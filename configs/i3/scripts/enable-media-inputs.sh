@@ -19,7 +19,7 @@ enable_input 'System Control'
 enable_input 'WMI hotkeys'
 enable_input 'Intel HID 5 button'
 
-# start evdev listener for Fn+media keys (needs input group)
+# start evdev listener for Consumer Control media keys (needs input group)
 consumer_event=""
 for path in /sys/class/input/event*/device/name; do
     name=$(cat "$path" 2>/dev/null) || continue

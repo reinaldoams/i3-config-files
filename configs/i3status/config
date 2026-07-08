@@ -24,6 +24,7 @@ order += "cpu_usage"
 # order += "wireless _first_"
 order += "volume master"
 order += "tztime date"
+order += "tztime weekday"
 order += "tztime time"
 
 wireless _first_ {
@@ -67,7 +68,11 @@ volume master {
 }
 
 tztime date {
-        format = "%b %d"
+        format = "%d %b"
+}
+
+tztime weekday {
+	format = "%a"
 }
 
 tztime time {

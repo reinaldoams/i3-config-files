@@ -20,6 +20,9 @@ exec --no-startup-id gammastep -P -O 3000
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh
 exec --no-startup-id sh -c 'sleep 3; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh; sleep 5; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
 
+# setting picom compositor
+exec_always --no-startup-id picom
+
 # flameshot daemon (re-checked on reload; dbus registration matters more than pgrep)
 exec --no-startup-id sh -c 'sleep 1; /home/reinaldo/.config/i3/scripts/flameshot-daemon.sh'
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/flameshot-daemon.sh
@@ -45,13 +48,11 @@ exec --no-startup-id /home/reinaldo/.config/i3/scripts/connect-wifi.sh
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh
 exec --no-startup-id sh -c 'sleep 3; /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh; sleep 8; /home/reinaldo/.config/i3/scripts/enable-media-inputs.sh'
 # media keys (volume, brightness, playback)
+# Fn+F10/F11/F12 on the BT keyboard send KEY_VOLUME* scancodes → XF86Audio* below.
+# Plain F10/F11/F12 send F-key scancodes → apps (do not bindsym F10/F11/F12 here).
 bindsym XF86AudioRaiseVolume  exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-up'
 bindsym XF86AudioLowerVolume  exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-down'
 bindsym XF86AudioMute         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-mute'
-# SINO WEALTH BT keyboard: Fn+F10/F11/F12 (mute / vol down / vol up) as F-keys when they reach X
-bindsym F10 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-mute'
-bindsym F11 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-down'
-bindsym F12 exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh volume-up'
 bindsym XF86AudioMicMute      exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh mic-mute'
 bindsym XF86AudioPlay         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh play-pause'
 bindsym XF86AudioNext         exec --no-startup-id sh -c '/home/reinaldo/.config/i3/scripts/media-keys.sh next'
@@ -102,14 +103,11 @@ bindsym $mod+v split v
 # toggle split orientation
 bindsym $mod+semicolon split toggle
 
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+Shift+slash layout toggle all
 
 # toggle tiling / floating
-bindsym $mod+Shift+space floating toggle
+bindsym $mod+f floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -201,8 +199,8 @@ bar {
 # styling windows borders
 for_window [class="^.*"] border pixel 1
 # adding a little margin around windows
-gaps inner 10
-gaps outer -10
+gaps inner 5
+gaps outer 0
 
 # Making pop-up windows of some programs floating enable
 for_window [class="knotes"] floating enable
