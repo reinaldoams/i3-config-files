@@ -19,9 +19,9 @@ general {
         # color_bad = "#FF5555"       # Red
 }
 
-order += "memory"
 order += "cpu_usage"
-# order += "wireless _first_"
+order += "memory"
+order += "wireless _first_"
 order += "volume master"
 order += "tztime date"
 order += "tztime weekday"
@@ -51,7 +51,8 @@ load {
 
 memory {
         # Cyan
-        format = "%used/%total"
+	format = "📏%percentage_used"
+        #format = "%used/%total"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
 }

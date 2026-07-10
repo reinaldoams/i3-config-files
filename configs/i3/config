@@ -183,7 +183,7 @@ client.background                 #F8F8F2
 # i3bar configuration
 bar {
     status_command i3status | i3status-title-on-bar --color '#FFFF00'
-
+    # position top
 
      colors {
         # background       #282A36
@@ -202,7 +202,7 @@ bar {
 # styling windows borders
 for_window [class="^.*"] border pixel 1
 # adding a little margin around windows
-gaps inner 5
+gaps inner 8
 gaps outer 0
 
 # Making pop-up windows of some programs floating enable
