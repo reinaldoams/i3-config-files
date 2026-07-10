@@ -16,8 +16,16 @@ brightness_set() {
     local dev max cur new
 
     if command -v brightnessctl >/dev/null; then
-        brightnessctl set "${delta_pct}%+" >/dev/null
-        notify -t 800 "Brightness" "$(brightnessctl get)%"
+        if [ "$delta_pct" -lt 0 ]; then
+            brightnessctl set "$((-delta_pct))%-" >/dev/null
+        else
+            brightnessctl set "${delta_pct}%+" >/dev/null
+        fi
+        local cur max pct
+        cur=$(brightnessctl get)
+        max=$(brightnessctl max)
+        pct=$((cur * 100 / max))
+        notify -t 800 "Brightness" "${pct}%"
         return
     fi
 
