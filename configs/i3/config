@@ -104,7 +104,7 @@ bindsym $mod+v split v
 bindsym $mod+semicolon split toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+Shift+slash layout toggle all
+bindsym $mod+s layout toggle all
 
 # toggle tiling / floating
 bindsym $mod+f floating toggle
