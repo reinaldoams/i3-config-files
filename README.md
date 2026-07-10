@@ -23,6 +23,34 @@ Used programs (that didnt come from Fedora i3 Spin):
 - rofi
 - compton
 
+Styling:
+- Bibata Cursor
+	~/.icons/default/index.theme
+    ```
+    [Icon Theme]
+	Inherits=Bibata-Modern-Amber
+    ```
+	~/.Xresources:
+    ```
+    Xcursor.theme: Bibata-Modern-Amber
+	Xcursor.size: 26
+    ```
+    (apply that last one with `xrdb -merge ~/.Xresources`)
+    ~/.xprofile:
+    ```
+    echo 'export XCURSOR_THEME=Bibata-Modern-Amber' >> ~/.xprofile
+	echo 'export XCURSOR_SIZE=26' >> ~/.xprofile
+	```
+    making it work in flatpak apps:
+    ```
+	sudo flatpak override --filesystem=$HOME/.icons
+	sudo flatpak override --env=XCURSOR_THEME=Bibata-Modern-Amber
+	sudo flatpak override --env=XCURSOR_SIZE=32
+    ```
+    also run:
+       `gsettings set org.gnome.desktop.interface cursor-size 26`
+       `gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Amber'`
+
 
 Additional steps:
 - adding name of currently open window to i3status bar:
@@ -126,3 +154,15 @@ yabridge note:
 Mounting another disk that needs password:
 - list available disks with `lsblk -f`
 - mount it with `udisksctl mount -b /dev/${nome do disco}`
+
+installing Ratatouille:
+- necessary dependencies (before make):
+	`sudo dnf install gcc-c++ make cairo-devel lv2-devel libsndfile-devel libX11-devel`
+- build:
+	```
+    cd ~/.lv2/Ratatouille.lv2
+	git submodule update --init --recursive
+	make clean
+	make lv2
+	make install
+	```
