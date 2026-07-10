@@ -30,6 +30,7 @@ exec python3 - "$EVENT_DEV" "$MEDIA_SCRIPT" <<'PY'
 import struct
 import subprocess
 import sys
+import time
 
 dev, media_script = sys.argv[1], sys.argv[2]
 # EV_KEY: KEY_MUTE=113, KEY_VOLUMEDOWN=114, KEY_VOLUMEUP=115
@@ -37,17 +38,18 @@ actions = {113: "volume-mute", 114: "volume-down", 115: "volume-up"}
 
 while True:
     try:
-        data = open(dev, "rb").read(24)
+        # Keep the fd open — reopening between reads drops EV_KEY after EV_MSC/SYN.
+        with open(dev, "rb", buffering=0) as f:
+            while True:
+                data = f.read(24)
+                if len(data) < 24:
+                    break
+                _sec, _usec, ev_type, code, value = struct.unpack("qqHHi", data)
+                if ev_type != 1 or value != 1:  # EV_KEY, key press
+                    continue
+                action = actions.get(code)
+                if action:
+                    subprocess.Popen([media_script, action])
     except OSError:
-        import time
         time.sleep(2)
-        continue
-    if len(data) < 24:
-        continue
-    _sec, _usec, ev_type, code, value = struct.unpack("qqHHi", data)
-    if ev_type != 1 or value != 1:  # EV_KEY, key press
-        continue
-    action = actions.get(code)
-    if action:
-        subprocess.Popen([media_script, action])
 PY

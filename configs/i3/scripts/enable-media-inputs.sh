@@ -10,7 +10,8 @@ enable_input() {
     while IFS= read -r line; do
         id=$(echo "$line" | grep -oP 'id=\K[0-9]+' | head -1)
         [ -n "$id" ] || continue
-        xinput set-prop "$id" "libinput Send Events Mode Enabled" 1 0 2>/dev/null || true
+        # 0 0 = send events (enabled). 1 0 = disabled — do not invert this.
+        xinput set-prop "$id" "libinput Send Events Mode Enabled" 0 0 2>/dev/null || true
     done < <(xinput list | grep -iF "$pattern")
 }
 
