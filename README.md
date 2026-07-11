@@ -8,6 +8,7 @@ Locations:
 - configs/gtk/config => ~/.config/gtk-3.0/settings.ini
 - configs/nvim/* => ~/.config/nvim/*
 - configs/systemd/user/i3-session.target => ~/.config/systemd/user/i3-session.target
+- configs/dunst/dunstrc => ~/.config/dunst/dunstrc
 - configs/.bashrc => ~/.bashrc
 
 Used programs (that didnt come from Fedora i3 Spin):
