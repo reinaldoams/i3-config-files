@@ -21,6 +21,9 @@ rsync -a $EXCLUDES ~/.config/picom/ ./configs/picom/
 echo 'imported picom configs'
 rsync -a $EXCLUDES ~/.config/MangoHud/ ./configs/MangoHud/
 echo 'imported MangoHud configs'
+mkdir -p ./configs/systemd/user
+rsync -a ~/.config/systemd/user/i3-session.target ./configs/systemd/user/i3-session.target
+echo 'imported systemd i3-session.target'
 rsync -a ~/.bashrc ./configs/.bashrc
 echo 'imported .bashrc'
 rsync -a ~/.bash_profile ./configs/.bash_profile

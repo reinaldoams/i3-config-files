@@ -7,6 +7,7 @@ Locations:
 - configs/i3status/config => ~/.config/i3status/config
 - configs/gtk/config => ~/.config/gtk-3.0/settings.ini
 - configs/nvim/* => ~/.config/nvim/*
+- configs/systemd/user/i3-session.target => ~/.config/systemd/user/i3-session.target
 - configs/.bashrc => ~/.bashrc
 
 Used programs (that didnt come from Fedora i3 Spin):
@@ -65,7 +66,22 @@ Additional steps:
     `sudo dracut --force --hostonly`
     (rebuild image of initramfs creating an lightweight system-specific image)
 - if dual booting with Windows, remember to go to Windows settings to disable fast startup to make Linux boot faster
-- xdg-desktop-portal-gtk should be installed (sudo dnf install) to make flatpak apps to open things outside their sandbox (like a browser opening folder where a downloaded file is located)
+- xdg-desktop-portal / Flatpak link opening on i3:
+    Install the GTK portal backend so Flatpak apps can talk to the host (open folders, pick files, etc.):
+    `sudo dnf install xdg-desktop-portal xdg-desktop-portal-gtk`
+
+    On GNOME/KDE, systemd reaches `graphical-session.target` automatically and starts `xdg-desktop-portal.service`. On **i3 + LightDM**, that target never becomes active, so the portal stays dead. Flatpak apps then fail to open https links (`Failed to call portal: ... org.freedesktop.portal.Desktop`).
+
+    **Fix used here:**
+    1. Install `configs/systemd/user/i3-session.target` to `~/.config/systemd/user/i3-session.target`. That unit binds to `graphical-session.target` and wants `xdg-desktop-portal.service`, so starting it brings the portal up without starting `graphical-session.target` by hand (systemd refuses a manual start of that target).
+    2. In `configs/i3/config`, at login:
+        ```i3
+        exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
+        exec --no-startup-id systemctl --user start i3-session.target
+        ```
+    3. After copying the unit (or on first setup): `systemctl --user daemon-reload` then either re-login or run `systemctl --user start i3-session.target`.
+
+    **Verify:** `systemctl --user is-active xdg-desktop-portal.service` should print `active`. From a Flatpak sandbox, `flatpak run --command=xdg-open com.rtosta.zapzap https://example.com` should open the default browser.
 - setting default browser command:
 	`xdg-settings set default-web-browser net.waterfox.waterfox.desktop`
 - fixing cedilla (portuguese):
