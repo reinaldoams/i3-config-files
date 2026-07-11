@@ -187,9 +187,6 @@ do
 	local cpplint = require("efmls-configs.linters.cpplint")
 	local clangfmt = require("efmls-configs.formatters.clang_format")
 
-	local go_revive = require("efmls-configs.linters.go_revive")
-	local gofumpt = require("efmls-configs.formatters.gofumpt")
-
 	vim.lsp.config("efm", {
 		filetypes = {
 			"c",
