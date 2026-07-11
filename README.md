@@ -52,6 +52,29 @@ Styling:
        `gsettings set org.gnome.desktop.interface cursor-size 26`
        `gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Amber'`
 
+- Global dark mode (GTK + apps that follow the desktop portal, including Cursor):
+    `configs/gtk-3.0/settings.ini` already has `gtk-application-prefer-dark-theme=1`, but that alone is **not** enough for Electron/Flatpak apps. They read the FreeDesktop portal setting `org.freedesktop.appearance` `color-scheme`.
+
+    On i3, set:
+    ```bash
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+    ```
+
+    **Why this matters with the portal fix above:** once `xdg-desktop-portal` is running (via `i3-session.target`), apps actually query that color-scheme. If it is still `'default'` (portal value `0`), Cursor and similar apps look light even when GTK prefers dark. With `'prefer-dark'`, the portal reports `1`.
+
+    **Verify:**
+    ```bash
+    gsettings get org.gnome.desktop.interface color-scheme
+    # expect: 'prefer-dark'
+    gdbus call --session --dest org.freedesktop.portal.Desktop \
+      --object-path /org/freedesktop/portal/desktop \
+      --method org.freedesktop.portal.Settings.ReadOne \
+      'org.freedesktop.appearance' 'color-scheme'
+    # expect: (<uint32 1>,)
+    ```
+    Then reload Cursor (**Developer: Reload Window**) or restart it if the UI is still light.
+
 
 Additional steps:
 - adding name of currently open window to i3status bar:
@@ -82,6 +105,8 @@ Additional steps:
     3. After copying the unit (or on first setup): `systemctl --user daemon-reload` then either re-login or run `systemctl --user start i3-session.target`.
 
     **Verify:** `systemctl --user is-active xdg-desktop-portal.service` should print `active`. From a Flatpak sandbox, `flatpak run --command=xdg-open com.rtosta.zapzap https://example.com` should open the default browser.
+
+    After the portal is up, also set global dark mode (`gsettings` `color-scheme prefer-dark`) — see **Styling → Global dark mode** above — or apps like Cursor may switch to light.
 - setting default browser command:
 	`xdg-settings set default-web-browser net.waterfox.waterfox.desktop`
 - fixing cedilla (portuguese):
