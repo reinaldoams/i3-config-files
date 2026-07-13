@@ -31,3 +31,8 @@ rsync -a ~/.bashrc ./configs/.bashrc
 echo 'imported .bashrc'
 rsync -a ~/.bash_profile ./configs/.bash_profile
 echo 'imported .bash_profile'
+rsync -a ~/.XCompose ./configs/.XCompose
+echo 'imported .XCompose'
+mkdir -p ./configs/environment.d
+rsync -a ~/.config/environment.d/90-cedilla.conf ./configs/environment.d/90-cedilla.conf
+echo 'imported environment.d cedilla'

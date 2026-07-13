@@ -1,0 +1,9 @@
+# Prefer Portuguese cedilla over acute-c (en_US Compose) with US International
+include "%L"
+
+<dead_acute> <c> : "ç" ccedilla
+<dead_acute> <C> : "Ç" Ccedilla
+<Multi_key> <apostrophe> <c> : "ç" ccedilla
+<Multi_key> <apostrophe> <C> : "Ç" Ccedilla
+<Multi_key> <c> <apostrophe> : "ç" ccedilla
+<Multi_key> <C> <apostrophe> : "Ç" Ccedilla

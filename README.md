@@ -10,6 +10,8 @@ Locations:
 - configs/systemd/user/i3-session.target => ~/.config/systemd/user/i3-session.target
 - configs/dunst/dunstrc => ~/.config/dunst/dunstrc
 - configs/.bashrc => ~/.bashrc
+- configs/.XCompose => ~/.XCompose
+- configs/environment.d/90-cedilla.conf => ~/.config/environment.d/90-cedilla.conf
 
 Used programs (that didnt come from Fedora i3 Spin):
 - gammastep (for color temperature setting)
@@ -110,8 +112,14 @@ Additional steps:
     After the portal is up, also set global dark mode (`gsettings` `color-scheme prefer-dark`) — see **Styling → Global dark mode** above — or apps like Cursor may switch to light.
 - setting default browser command:
 	`xdg-settings set default-web-browser net.waterfox.waterfox.desktop`
-- fixing cedilla (portuguese):
-	`sudo sed -i 's/"cedilla" "Cedilla" "gtk30" "gnome-look" "az:ca:co:fr:gv:it:ro:tr:wa"/"cedilla" "Cedilla" "gtk30" "gnome-look" "az:ca:co:fr:gv:it:ro:tr:wa:en"/g' /usr/lib64/gtk-3.0/3.0.0/immodules.cache`
+- fixing cedilla (portuguese) with US International (`us` + `intl`):
+    With `LANG=en_US.UTF-8`, Compose maps `' + c` to **ć** instead of **ç**.
+
+    **Fix used here (no root / no gtk immodules.cache edit):**
+    1. Copy `configs/.XCompose` → `~/.XCompose` (maps `' + c/C` → ç/Ç).
+    2. Copy `configs/environment.d/90-cedilla.conf` → `~/.config/environment.d/90-cedilla.conf`
+       (`LC_CTYPE=pt_BR.UTF-8` + `GTK_IM_MODULE`/`QT_IM_MODULE=xim` so apps honor Compose).
+    3. Log out and back in (full session), then restart apps. Test `' then c`.
 - disabling automatic screen turn-off (DPMS) on i3 + X11:
     On a minimal i3 setup there is no desktop power manager (`xfce4-power-manager`, GNOME Settings, etc.), but Xorg still enables **DPMS** by default. After about **10 minutes** without keyboard/mouse input, the monitor blanks or powers off (`600/600/600` second timeouts).
 
