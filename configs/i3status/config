@@ -52,6 +52,7 @@ load {
 memory {
         # Cyan
 	format = "📏%percentage_used"
+	decimals = 0
         #format = "%used/%total"
         threshold_degraded = "1G"
         format_degraded = "MEMORY < %available"
