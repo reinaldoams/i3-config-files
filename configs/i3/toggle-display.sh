@@ -20,5 +20,4 @@ fi
 
 pkill xwinwrap 2>/dev/null
 pkill -f 'mpv.*wallpaper-video\.mp4' 2>/dev/null
-sleep 0.5
-"$HOME/.config/i3/video-wallpaper.sh"
+feh --bg-fill "$HOME/Pictures/wallpaper-i3.png"
