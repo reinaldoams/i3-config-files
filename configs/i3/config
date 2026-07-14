@@ -10,7 +10,10 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 # so Flatpak apps can open links in the browser
 exec --no-startup-id dbus-update-activation-environment --systemd DISPLAY XAUTHORITY XDG_CURRENT_DESKTOP
 exec --no-startup-id systemctl --user start i3-session.target
-exec --no-startup-id nm-applet
+
+# Tray applets (guards avoid duplicates; xdg copies hidden in ~/.config/autostart)
+exec --no-startup-id sh -c 'pgrep -x nm-applet >/dev/null || exec nm-applet'
+exec --no-startup-id sh -c 'pgrep -x volumeicon >/dev/null || exec volumeicon'
 
 # gammastep (night mode)
 exec --no-startup-id gammastep -P -O 3000
