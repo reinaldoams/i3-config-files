@@ -34,7 +34,8 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id parcellite
 
 # use DisplayPort-0 display
-exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 180 --output HDMI-A-0 --off
+# exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 180 --output HDMI-A-0 --off
+exec --no-startup-id xrandr --output HDMI-A-0 --primary --mode 2560x1080 --rate 74.99 --output DisplayPort-2 --off
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -57,11 +58,7 @@ bindsym $mod+b exec --no-startup-id firefox
 bindsym $mod+e exec --no-startup-id thunar
 
 # screen lock shortcut
-bindsym $mod+l exec --no-startup-id env \
-    XSECURELOCK_SAVER=saver_mpv \
-    XSECURELOCK_LIST_VIDEOS_COMMAND="printf '%s\n' /home/reinaldo/Videos/lock-screen-video.mp4" \
-    XSECURELOCK_VIDEOS_FLAGS="--no-osc --no-osd-bar" \
-    xsecurelock
+bindsym $mod+l exec i3lock -i ~/Pictures/lock-wallpaper-i3.png -t
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod

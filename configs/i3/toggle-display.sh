@@ -1,20 +1,20 @@
 #!/bin/bash
 STATE_FILE="$HOME/.cache/i3-display-mode"
 HDMI="HDMI-A-0"
-DP="DisplayPort-0"
+DP="DisplayPort-2"
 
 mkdir -p "$(dirname "$STATE_FILE")"
-mode=$(cat "$STATE_FILE" 2>/dev/null || echo "dp")
+mode=$(cat "$STATE_FILE" 2>/dev/null || echo "hdmi")
 
-if [ "$mode" = "dp" ]; then
-  xrandr --output "$HDMI" --primary --mode 1680x1050 --rate 59.95 --output "$DP" --off
-  notify-send -t 1500 "Display" "HDMI only"
-  echo "hdmi" > "$STATE_FILE"
-  gammastep -P -O 3000
-else
-  xrandr --output "$DP" --primary --mode 2560x1440 --rate 180 --output "$HDMI" --off
+if [ "$mode" = "hdmi" ]; then
+  xrandr --output "$DP" --primary --mode 1680x1050 --rate 59.95 --output "$HDMI" --off
   notify-send -t 1500 "Display" "DisplayPort only"
   echo "dp" > "$STATE_FILE"
+  gammastep -P -O 3000
+else
+  xrandr --output "$HDMI" --primary --mode 2560x1080 --rate 74.99 --output "$DP" --off
+  notify-send -t 1500 "Display" "HDMI only"
+  echo "hdmi" > "$STATE_FILE"
   gammastep -P -O 3000
 fi
 

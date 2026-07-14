@@ -28,32 +28,35 @@ Used programs (that didnt come from Fedora i3 Spin):
 - compton
 
 Styling:
-- Bibata Cursor
-	~/.icons/default/index.theme
+- Bibata Cursor (`Bibata-Modern-Ice`, size 26)
+	Install theme under `~/.icons` or `~/.local/share/icons` (extract release tarball from https://github.com/ful1e5/Bibata_Cursor).
+	~/.icons/default/index.theme (or `~/.local/share/icons/default/index.theme`):
     ```
     [Icon Theme]
-	Inherits=Bibata-Modern-Amber
+	Inherits=Bibata-Modern-Ice
     ```
 	~/.Xresources:
     ```
-    Xcursor.theme: Bibata-Modern-Amber
+    Xcursor.theme: Bibata-Modern-Ice
 	Xcursor.size: 26
     ```
     (apply that last one with `xrdb -merge ~/.Xresources`)
     ~/.xprofile:
     ```
-    echo 'export XCURSOR_THEME=Bibata-Modern-Amber' >> ~/.xprofile
-	echo 'export XCURSOR_SIZE=26' >> ~/.xprofile
+    export XCURSOR_THEME=Bibata-Modern-Ice
+	export XCURSOR_SIZE=26
 	```
     making it work in flatpak apps:
     ```
 	sudo flatpak override --filesystem=$HOME/.icons
-	sudo flatpak override --env=XCURSOR_THEME=Bibata-Modern-Amber
-	sudo flatpak override --env=XCURSOR_SIZE=32
+	sudo flatpak override --filesystem=$HOME/.local/share/icons
+	sudo flatpak override --env=XCURSOR_THEME=Bibata-Modern-Ice
+	sudo flatpak override --env=XCURSOR_SIZE=26
     ```
     also run:
        `gsettings set org.gnome.desktop.interface cursor-size 26`
-       `gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Amber'`
+       `gsettings set org.gnome.desktop.interface cursor-theme 'Bibata-Modern-Ice'`
+	GTK apps also pick it up via `configs/gtk-3.0/settings.ini` (`gtk-cursor-theme-name` / `gtk-cursor-theme-size`). Relogin (or restart apps) after changing.
 
 - Global dark mode (GTK + apps that follow the desktop portal, including Cursor):
     `configs/gtk-3.0/settings.ini` already has `gtk-application-prefer-dark-theme=1`, but that alone is **not** enough for Electron/Flatpak apps. They read the FreeDesktop portal setting `org.freedesktop.appearance` `color-scheme`.
