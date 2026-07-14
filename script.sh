@@ -11,6 +11,10 @@ rsync -a $EXCLUDES ~/.config/gtk-3.0/ ./configs/gtk-3.0/
 echo 'imported gtk configs'
 rsync -a $EXCLUDES ~/.config/i3/ ./configs/i3/
 echo 'imported i3 configs'
+# LightDM greeter (system file; theme CSS lives under configs/i3/lightdm-black-theme/)
+mkdir -p ./configs/lightdm
+rsync -a /etc/lightdm/lightdm-gtk-greeter.conf ./configs/lightdm/lightdm-gtk-greeter.conf
+echo 'imported lightdm-gtk-greeter.conf'
 rsync -a $EXCLUDES ~/.config/i3status/ ./configs/i3status/
 echo 'imported i3status configs'
 rsync -a $EXCLUDES ~/.config/nvim/ ./configs/nvim/

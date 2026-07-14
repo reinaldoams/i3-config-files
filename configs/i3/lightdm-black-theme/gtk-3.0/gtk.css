@@ -1,0 +1,29 @@
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+#login_window,
+#shutdown_dialog,
+#restart_dialog {
+    background-color: #000000;
+    color: #ffffff;
+    border-style: none;
+    border-radius: 6px;
+}
+
+#buttonbox_frame {
+    background-color: #000000;
+    background-image: none;
+    border-style: none;
+}
+
+#login_window entry,
+#login_window .entry {
+    background-color: #111111;
+    color: #ffffff;
+    border-color: #333333;
+    background-image: none;
+}
+
+#panel_window {
+    background-color: #000000;
+    color: #ffffff;
+}
