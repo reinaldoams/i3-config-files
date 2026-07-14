@@ -47,8 +47,9 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
     notify-send -t 1000 "Volume" "Toggled mute"
 
 # open waterfox with Win + w
-#bindsym $mod+w exec --no-startup-id flatpak run net.waterfox.waterfox
-bindsym $mod+w exec --no-startup-id flatpak run app.zen_browser.zen
+bindsym $mod+w exec --no-startup-id flatpak run net.waterfox.waterfox
+#bindsym $mod+w exec --no-startup-id flatpak run app.zen_browser.zen
+
 # open firefox with Win + b
 bindsym $mod+b exec --no-startup-id firefox
 
