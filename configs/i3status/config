@@ -21,7 +21,7 @@ general {
 
 order += "cpu_usage"
 order += "memory"
-order += "wireless _first_"
+# order += "wireless _first_"
 order += "volume master"
 order += "tztime date"
 order += "tztime weekday"

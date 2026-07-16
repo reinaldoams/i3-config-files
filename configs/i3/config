@@ -10,7 +10,6 @@ exec --no-startup-id dex-autostart --autostart --environment i3
 exec --no-startup-id sh -c 'export GTK_THEME=Breeze-Dark QT_QPA_PLATFORMTHEME=kde && dbus-update-activation-environment --systemd DISPLAY XAUTHORITY DBUS_SESSION_BUS_ADDRESS XDG_RUNTIME_DIR XDG_CURRENT_DESKTOP XDG_SESSION_ID GTK_THEME QT_QPA_PLATFORMTHEME'
 exec --no-startup-id xsettingsd
 exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY
-exec --no-startup-id systemctl --user start dolphin-daemon.service
 exec --no-startup-id nm-applet
 
 # gammastep (night mode)
