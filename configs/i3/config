@@ -54,6 +54,9 @@ bindsym $mod+w exec --no-startup-id flatpak run net.waterfox.waterfox
 # open firefox with Win + b
 bindsym $mod+b exec --no-startup-id firefox
 
+# open firefox in incognito
+bindsym $mod+Shift+b exec --no-startup-id firefox --private-window
+
 # open thunar file manager
 bindsym $mod+e exec --no-startup-id thunar
 
