@@ -177,7 +177,7 @@ client.background                 #F8F8F2
 # styling windows borders
 for_window [class="^.*"] border pixel 3
 # adding a little margin around windows
-gaps inner 5
+gaps inner 3
 
 # Making pop-up windows of some programs floating enable
 for_window [class="Steam"] floating enable
