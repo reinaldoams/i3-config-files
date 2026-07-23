@@ -19,6 +19,11 @@ exec --no-startup-id gammastep -P -O 3000
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh
 exec --no-startup-id sh -c 'sleep 3; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh; sleep 5; /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
 
+# Start GNOME Keyring
+exec --no-startup-id eval $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+exec --no-startup-id export $(gnome-keyring-daemon --start --components=pkcs11,secrets,ssh)
+
+
 # setting picom compositor
 exec_always --no-startup-id picom
 
@@ -35,7 +40,7 @@ exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/keep-screen-on.sh
 exec --no-startup-id sh -c 'sleep 5; /home/reinaldo/.config/i3/scripts/keep-screen-on.sh'
 
 # external monitor only at login ($mod+p toggles displays, $mod+Shift+p for both)
-exec --no-startup-id sh -c 'xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh && mkdir -p ~/.cache && echo external > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && i3-msg workspace number 1'
+exec --no-startup-id /home/reinaldo/.config/i3/scripts/login-display.sh
 
 # add wifi password to the connection with nmcli (run this command in the terminal):
 # nmcli connection modify "WIFI_NAME" wifi-sec.psk "YOUR_WIFI_PASSWORD"
@@ -62,6 +67,11 @@ bindsym XF86MonBrightnessDown exec --no-startup-id sh -c '/home/reinaldo/.config
 
 # open google chrome with Win + b
 bindsym $mod+b exec google-chrome
+
+# open brave with Win + w
+bindsym $mod+w exec brave-browser
+
+bindsym $mod+Shift+b exec google-chrome --incognito
 
 # screen lock shortcut
 bindsym $mod+l exec i3lock -i ~/Documents/wallpaper.png
