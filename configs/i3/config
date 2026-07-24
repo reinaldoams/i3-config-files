@@ -197,7 +197,7 @@ bar {
         separator        #44475A
 
         # class            border    bground   text
-        focused_workspace  #FFFF00   #FFFF00   #000000
+        focused_workspace  #CCCCCC   #CCCCCC   #000000
         active_workspace   #000000   #FFFF00   #F8F8F2
 #        active_workspace   #000000   #44475A   #F8F8F2
         inactive_workspace #282A36   #282A36   #AAAAAA
