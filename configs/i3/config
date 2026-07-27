@@ -61,7 +61,8 @@ bindsym $mod+Shift+b exec --no-startup-id firefox --private-window
 bindsym $mod+e exec --no-startup-id thunar
 
 # screen lock shortcut
-bindsym $mod+l exec i3lock -i ~/Pictures/lock-wallpaper-i3.png -t
+#bindsym $mod+l exec i3lock -i ~/Pictures/lock-wallpaper-i3.png -t
+bindsym $mod+l exec i3lock -c 000000
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
