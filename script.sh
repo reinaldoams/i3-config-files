@@ -19,5 +19,8 @@ echo 'imported nvim configs'
 #echo 'imported picom configs'
 #rsync -a $EXCLUDES ~/.config/MangoHud/ ./configs/MangoHud/
 #echo 'imported MangoHud configs'
+mkdir -p ./configs/dunst
+rsync -a ~/.config/dunst/dunstrc ./configs/dunst/dunstrc
+echo 'imported dunst dunstrc'
 rsync -a ~/.bashrc ./configs/.bashrc
 echo 'imported .bashrc'
