@@ -11,8 +11,9 @@ general {
 	output_format = "i3bar"
         colors = true
         interval = 1
+        separator = true
         markup = "pango"            # Enables individual color wrapping
-        
+
         # Fallback Dracula Colors
         color_good = "#50FA7B"      # Green
         color_degraded = "#F1FA8C"  # Yellow
@@ -50,7 +51,7 @@ load {
 memory {
         # Cyan
         #format = "<span color='#F1FA8C'>%used/%total</span>"
-        format = "%used/%total"
+        format = "RAM %percentage_used"
         threshold_degraded = "1G"
         #format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
         format_degraded = "MEMORY < %available"
@@ -59,12 +60,12 @@ memory {
 cpu_usage {
         # Foreground color
         # format = "<span color='#F8F8F2'>🔲%usage</span>"
-        format = "🔲%usage"
+        format = "CPU %usage"
 }
 
 volume master {
         # Orange color
-        format = "🔊%volume"
+        format = "VOL %volume"
         # format = "<span color='#FFB86C'>🔊%volume</span>"
         format_muted = "🔇%volume"
         # format_muted = "<span color='#FF5555'>🔇%volume</span>"

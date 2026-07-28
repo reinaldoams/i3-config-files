@@ -27,9 +27,6 @@ exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png
 # setting picom compositor
 exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 
-# setting polybar
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
 # setting parcellite clipboard manager
 exec --no-startup-id parcellite
 
@@ -182,13 +179,13 @@ bar {
     position top
 
      colors {
-        background       #111111
-        statusline       #AAAAAA
-        separator        #CC0000
+        background       #222222
+        statusline       #FFFFFF
+        separator        #777777
 
         # class            border    bground   text
-        focused_workspace  #CC0000   #CC0000   #FFFF00
-        inactive_workspace #000000   #222222   #AAAAAA
+        focused_workspace  #CCCCCC   #CCCCCC   #000000
+        inactive_workspace #222222   #222222   #AAAAAA
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
     }
