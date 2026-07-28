@@ -175,24 +175,6 @@ client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
 client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
 client.background                 #F8F8F2
 
-
-# i3bar configuration
-bar {
-    status_command i3status | i3status-title-on-bar --color '#CCCC00'
-    position top
-
-     colors {
-        background       #111111
-        statusline       #AAAAAA
-        separator        #CC0000
-
-        # class            border    bground   text
-        focused_workspace  #CC0000   #CC0000   #FFFF00
-        inactive_workspace #000000   #222222   #AAAAAA
-        urgent_workspace   #000000   #FF5555   #000000
-        binding_mode       #000000   #FF5555   #F8F8F2
-    }
-}
 # styling windows borders
 for_window [class="^.*"] border pixel 3
 # adding a little margin around windows

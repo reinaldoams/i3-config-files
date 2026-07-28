@@ -49,28 +49,35 @@ load {
 
 memory {
         # Cyan
-        format = "<span color='#F1FA8C'>%used/%total</span>"
+        #format = "<span color='#F1FA8C'>%used/%total</span>"
+        format = "%used/%total"
         threshold_degraded = "1G"
-        format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
+        #format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
+        format_degraded = "MEMORY < %available"
 }
 
 cpu_usage {
         # Foreground color
-        format = "<span color='#F8F8F2'>🔲%usage</span>"
+        # format = "<span color='#F8F8F2'>🔲%usage</span>"
+        format = "🔲%usage"
 }
 
 volume master {
         # Orange color
-        format = "<span color='#FFB86C'>🔊%volume</span>"
-        format_muted = "<span color='#FF5555'>🔇%volume</span>"
+        format = "🔊%volume"
+        # format = "<span color='#FFB86C'>🔊%volume</span>"
+        format_muted = "🔇%volume"
+        # format_muted = "<span color='#FF5555'>🔇%volume</span>"
 }
 
 tztime date {
         # Green
-        format = "<span color='#50FA7B'>%Y.%m.%d</span>"
+        format = "%Y.%m.%d"
+        # format = "<span color='#50FA7B'>%Y.%m.%d</span>"
 }
 
 tztime time {
         # Current Line color
-        format = "<span color='#8BE9FD'>%H:%M</span>"
+        format = "%H:%M"
+        # format = "<span color='#8BE9FD'>%H:%M</span>"
 }
