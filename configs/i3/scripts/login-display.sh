@@ -1,7 +1,8 @@
 #!/bin/bash
 # Ordered login display setup (i3 exec lines run in parallel, so this keeps sequence).
 
-xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off
+#xrandr --output HDMI-1 --primary --mode 2560x1440 --rate 180 --output eDP-1 --off
+xrandr --output HDMI-1 --primary --mode 2560x1080 --rate 74.99 --output eDP-1 --off
 
 mkdir -p "$HOME/.cache"
 echo external > "$HOME/.cache/i3-display-mode"
