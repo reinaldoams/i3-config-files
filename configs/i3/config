@@ -122,7 +122,7 @@ bindsym $mod+f floating toggle
 bindsym $mod+space focus mode_toggle
 
 # enable both displays
-bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1440 --rate 144 --right-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh && notify-send -t 1500 "Display" "Both screens"'
+bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1080 --rate 74.99 --right-of eDP-1 --output eDP-1 --primary --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
 # toggle between built-in and external display
 bindsym $mod+p exec --no-startup-id /home/reinaldo/.config/i3/scripts/toggle-display.sh
 
