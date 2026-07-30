@@ -73,7 +73,7 @@ volume master {
 }
 
 tztime date {
-        format = "%d %b"
+        format = "<span color=\"#FFFF00\">%d %b</span>"
 }
 
 tztime weekday {
@@ -82,5 +82,5 @@ tztime weekday {
 
 tztime time {
         # Current Line color
-        format = "%H:%M"
+        format = "<span color=\"#FFFF00\">%H:%M</span>"
 }
