@@ -51,7 +51,7 @@ load {
 
 memory {
         # Cyan
-	format = "RAM %percentage_used"
+	format = "ram %percentage_used"
 	#format = "📏%percentage_used"
 	decimals = 0
         #format = "%used/%total"
@@ -61,23 +61,23 @@ memory {
 
 cpu_usage {
         # Foreground color
-        format = "CPU %usage"
+        format = "cpu %usage"
         # format = "🔲%usage"
 }
 
 volume master {
         # Orange color
         #format = "🔊%volume"
-        format = "VOL %volume"
+        format = "vol %volume"
         format_muted = "MUTED"
 }
 
 tztime date {
-        format = "<span color=\"#FFFF00\">%d %b</span>"
+        format = "<span text_transform=\"lowercase\" color=\"#FFFF00\">%d %b</span>"
 }
 
 tztime weekday {
-	format = "%A"
+	format = "<span text_transform=\"lowercase\">%A</span>"
 }
 
 tztime time {
