@@ -182,7 +182,7 @@ bar {
      colors {
         background       #091833
         statusline       #55ead4
-        separator        #880425
+        separator        #091833
 
         # class            border    bground   text
         focused_workspace  #ea00d9   #ea00d9   #091833
@@ -194,7 +194,7 @@ bar {
 # styling windows borders
 for_window [class="^.*"] border pixel 3
 # adding a little margin around windows
-gaps inner 3
+gaps inner 0
 
 # Making pop-up windows of some programs floating enable
 for_window [class="Steam"] floating enable
