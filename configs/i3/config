@@ -1,6 +1,6 @@
 set $mod Mod4
 
-font pango:FiraCode Nerd Font 15
+font pango:FiraCode Nerd Font 12
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -175,17 +175,18 @@ client.background                 #F8F8F2
 
 # i3bar configuration
 bar {
-    status_command i3status | i3status-title-on-bar --color '#CCCC00'
+    status_command i3status | i3status-title-on-bar --color '#ffffff'
     position top
+    # padding 2px
 
      colors {
-        background       #222222
-        statusline       #FFFFFF
-        separator        #777777
+        background       #091833
+        statusline       #55ead4
+        separator        #880425
 
         # class            border    bground   text
-        focused_workspace  #CCCCCC   #CCCCCC   #000000
-        inactive_workspace #222222   #222222   #AAAAAA
+        focused_workspace  #ea00d9   #ea00d9   #091833
+        inactive_workspace #000000   #091833   #ea00d9
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
     }

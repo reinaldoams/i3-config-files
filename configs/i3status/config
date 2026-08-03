@@ -11,7 +11,7 @@ general {
 	output_format = "i3bar"
         colors = true
         interval = 1
-        separator = true
+        separator = ""
         markup = "pango"            # Enables individual color wrapping
 
         # Fallback Dracula Colors
@@ -23,8 +23,8 @@ general {
 order += "memory"
 order += "cpu_usage"
 order += "volume master"
-order += "tztime date"
 order += "tztime time"
+order += "tztime date"
 
 wireless _first_ {
         format_up = "W: (%quality at %essid) %ip"
@@ -49,36 +49,35 @@ load {
 }
 
 memory {
-        # Cyan
-        #format = "<span color='#F1FA8C'>%used/%total</span>"
-        format = "RAM %percentage_used"
-        threshold_degraded = "1G"
-        #format_degraded = "<span color='#F1FA8C'>MEMORY < %available</span>"
-        format_degraded = "MEMORY < %available"
+        format = "<span line_height='2' background='#711c91' color='#ffffff'> ram %percentage_used </span>"
+        #format = "RAM %percentage_used"
+        #format_degraded = "MEMORY < %available"
+        separator_block_width = 0
 }
 
 cpu_usage {
         # Foreground color
-        # format = "<span color='#F8F8F2'>🔲%usage</span>"
-        format = "CPU %usage"
+        format = "<span line_height='2' background='#ea00d9' color='#000000'> cpu %usage </span>"
+        #format = "CPU %usage"
+        separator_block_width = 0
 }
 
 volume master {
-        # Orange color
-        format = "VOL %volume"
-        # format = "<span color='#FFB86C'>🔊%volume</span>"
-        format_muted = "🔇%volume"
+        #format = "VOL %volume"
+        format = "<span line_height='2' background='#0abdc6' color='#000000'> vol %volume </span>"
+        format_muted = "<span line_height='2' background='#0abdc6' color='#000000'> muted </span>"
+        #format_muted = "🔇%volume"
+        separator_block_width = 0
         # format_muted = "<span color='#FF5555'>🔇%volume</span>"
 }
 
-tztime date {
-        # Green
-        format = "%Y.%m.%d"
-        # format = "<span color='#50FA7B'>%Y.%m.%d</span>"
+tztime time {
+        format = "<span background='#133e7c'><span font_size='90%' rise='9000' color='#133e7c'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#133e7c'>x</span></span>"
+        separator_block_width = 0
 }
 
-tztime time {
-        # Current Line color
-        format = "%H:%M"
-        # format = "<span color='#8BE9FD'>%H:%M</span>"
+tztime date {
+        #format = "%Y.%m.%d"
+        format = "<span line_height='2' background='#091833' color='#ffffff'> %Y.%m.%d </span>"
+        separator_block_width = 0
 }
