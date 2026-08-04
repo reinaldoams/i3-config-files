@@ -57,22 +57,22 @@ memory {
 
 cpu_usage {
         # Foreground color
-        format = "<span line_height='2' background='#ea00d9' color='#000000'> cpu %usage </span>"
+        format = "<span line_height='2' background='#0abdc6' color='#000000'> cpu %usage </span>"
         #format = "CPU %usage"
         separator_block_width = 0
 }
 
 volume master {
         #format = "VOL %volume"
-        format = "<span line_height='2' background='#0abdc6' color='#000000'> vol %volume </span>"
-        format_muted = "<span line_height='2' background='#0abdc6' color='#000000'> muted </span>"
+        format = "<span line_height='2' background='#133e7c' color='#ffffff'> vol %volume </span>"
+        format_muted = "<span line_height='2' background='#133e7c' color='#ffffff'> muted </span>"
         #format_muted = "🔇%volume"
         separator_block_width = 0
         # format_muted = "<span color='#FF5555'>🔇%volume</span>"
 }
 
 tztime time {
-        format = "<span background='#133e7c'><span font_size='90%' rise='9000' color='#133e7c'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#133e7c'>x</span></span>"
+        format = "<span background='#ea00d9'><span font_size='90%' rise='9000' color='#ea00d9'>x</span><span color='#000000'>%H:%M</span><span font_size='90%' rise='-6000' color='#ea00d9'>x</span></span>"
         separator_block_width = 0
 }
 
