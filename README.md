@@ -81,6 +81,10 @@ Styling:
     ```
     Then reload Cursor (**Developer: Reload Window**) or restart it if the UI is still light.
 
+- xfce4-terminal config:
+    colors: preset White on Black
+    font: Consolas Regular 16
+
 
 Additional steps:
 - adding name of currently open window to i3status bar:
