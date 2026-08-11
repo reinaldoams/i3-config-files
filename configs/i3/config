@@ -192,15 +192,15 @@ bar {
     # position top
 
      colors {
-        background       #282A36
-        statusline       #F8F8F2
+        background       #1c1c1c
+        statusline       #c7c7c7
         separator        #44475A
 
         # class            border    bground   text
         focused_workspace  #CCCCCC   #CCCCCC   #000000
         active_workspace   #000000   #000000   #F8F8F2
-#        active_workspace   #000000   #44475A   #F8F8F2
-        inactive_workspace #282A36   #282A36   #AAAAAA
+       #active_workspace   #000000   #44475A   #F8F8F2
+        inactive_workspace #1c1c1c   #1c1c1c   #AAAAAA
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
     }
