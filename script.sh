@@ -19,8 +19,6 @@ rsync -a $EXCLUDES ~/.config/i3status/ ./configs/i3status/
 echo 'imported i3status configs'
 rsync -a $EXCLUDES ~/.config/nvim/ ./configs/nvim/
 echo 'imported nvim configs'
-rsync -a $EXCLUDES ~/.config/polybar/ ./configs/polybar/
-echo 'imported polybar configs'
 rsync -a $EXCLUDES ~/.config/picom/ ./configs/picom/
 echo 'imported picom configs'
 rsync -a $EXCLUDES ~/.config/MangoHud/ ./configs/MangoHud/
@@ -40,3 +38,7 @@ echo 'imported .XCompose'
 mkdir -p ./configs/environment.d
 rsync -a ~/.config/environment.d/90-cedilla.conf ./configs/environment.d/90-cedilla.conf
 echo 'imported environment.d cedilla'
+mkdir -p ./configs/xfce4-terminal
+rsync -a ~/.config/xfce4/terminal/terminalrc ./configs/xfce4-terminal/terminalrc
+rsync -a $EXCLUDES ~/.local/share/xfce4/terminal/colorschemes/ ./configs/xfce4-terminal/colorschemes/
+echo 'imported xfce4-terminal configs'
