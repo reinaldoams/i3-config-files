@@ -1,6 +1,7 @@
 In the /configs there are my config files that I use in my Fedora i3 Spin machine.
 In /files are files to where some config files point.
-In fonts folder has the font that I use1
+In /fonts has the font that I use: Cascadia Mono Regular, used in xfce4-terminal at size 16.
+Outside the terminal (i3 config), the font used is Cousine Nerd Font Mono at size 14.
 
 Locations:
 - configs/i3/config => ~/.config/i3/config
