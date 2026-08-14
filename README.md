@@ -38,6 +38,20 @@ Additional steps:
 yabridge note:
 - don't use flatpak to install the DAW to prevent files access issues when syncing plugins
 
+Zed editor setup:
+- keymap file location: `~/.config/zed/keymap.json`
+- fix for ctrl-p (file finder) not working when the project panel (sidebar) is focused, add:
+    ```json
+    [
+      {
+        "context": "ProjectPanel",
+        "bindings": {
+          "ctrl-p": "file_finder::Toggle"
+        }
+      }
+    ]
+    ```
+
 fixing wifi because of setup being i3 on top of debian kde:
 ```
 # Replace CONN and WIFI_PASSWORD
