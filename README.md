@@ -205,6 +205,21 @@ Additional steps:
 
     **If the screen still goes dark:** check the monitor's own OSD power-saving / sleep menu (separate from X DPMS).
 
+Zed keybindings (file_finder):
+- **Issue:** `ctrl+p` file finder toggle only worked when the file explorer (ProjectPanel) was focused, not when file content editor was focused.
+- **Root cause:** `~/.config/zed/keymap.json` had an unbind rule for `ctrl-p` in the `Workspace` context (which applies globally including the editor), preventing the keybinding from working outside the file explorer.
+- **Fix:** Removed the `Workspace` unbind block from `keymap.json`. Now `ctrl+p` works everywhere (editor, sidebar, picker).
+  ```json
+  // REMOVED:
+  {
+    "context": "Workspace",
+    "unbind": {
+      "ctrl-p": "file_finder::Toggle"
+    }
+  }
+  ```
+  Keep the `FileFinder || FileFinder > Picker > Editor` unbind block — it just prevents double-toggling when already in the picker.
+
 yabridge note:
 - don't use flatpak to install the DAW to prevent files access issues when syncing plugins
 
