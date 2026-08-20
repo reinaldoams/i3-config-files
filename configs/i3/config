@@ -31,8 +31,8 @@ exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 exec --no-startup-id parcellite
 
 # use DisplayPort-0 display
-# exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 180 --output HDMI-A-0 --off
-exec --no-startup-id xrandr --output HDMI-A-0 --primary --mode 2560x1080 --rate 74.99 --output DisplayPort-2 --off
+exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 179.85 --output HDMI-A-0 --off
+# exec --no-startup-id xrandr --output HDMI-A-0 --primary --mode 2560x1080 --rate 74.99 --output DisplayPort-2 --off
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -57,6 +57,9 @@ bindsym $mod+Shift+b exec --no-startup-id firefox --private-window
 # open thunar file manager
 bindsym $mod+e exec --no-startup-id thunar
 
+# show calendar in notification
+bindsym $mod+c exec --no-startup-id sh -c 'notify-send -u normal -t 10000 "Calendar" "$(~/.local/bin/show-calendar)"'
+
 # screen lock shortcut
 #bindsym $mod+l exec i3lock -i ~/Pictures/lock-wallpaper-i3.png -t
 bindsym $mod+l exec i3lock -c 000000
@@ -72,6 +75,9 @@ bindsym $mod+q kill
 
 # start rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun
+
+# power menu
+bindsym $mod+Shift+q exec --no-startup-id $HOME/.local/bin/powermenu
 
 # change focus
 bindsym $mod+Left focus left
@@ -165,9 +171,9 @@ bindsym $mod+Control Down  resize shrink height 5 px or 5 ppt
 bindsym Print exec --no-startup-id flameshot gui
 
 # class                 border    bground   text      indicator child_border
-client.focused          #6272A4   #6272A4   #F8F8F2   #FFFF00   #777777
-client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #44475A
-client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #282A36
+client.focused          #6272A4   #6272A4   #F8F8F2   #ea00d9   #711c91
+client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #091833
+client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #091833
 client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
 client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
 client.background                 #F8F8F2
@@ -192,7 +198,7 @@ bar {
     }
 }
 # styling windows borders
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 3
 # adding a little margin around windows
 gaps inner 0
 
@@ -204,6 +210,7 @@ for_window [class="^Wine$"] floating enable
 for_window [class="^Reaper$"] floating enable
 for_window [class="wine"] floating enable
 for_window [class="Wine"] floating enable
+for_window [title="^File Selector"] floating enable
 
 # Disable X DPMS / screensaver idle blanking (xset package not required)
 exec --no-startup-id $HOME/.local/bin/disable-dpms

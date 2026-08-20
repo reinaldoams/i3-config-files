@@ -17,3 +17,4 @@ MiscBordersDefault=TRUE
 MiscMenubarDefault=FALSE
 MiscToolbarDefault=FALSE
 MiscMouseWheelZoom=FALSE
+MiscHyperlinksEnabled=FALSE

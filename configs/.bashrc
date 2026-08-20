@@ -21,6 +21,12 @@ alias confignvim="nvim ~/.config/nvim/init.lua"
 alias heroic="flatpak run com.heroicgameslauncher.hgl"
 alias btop="sudo btop"
 
+# plex
+alias plex-start="sudo systemctl start plexmediaserver"
+alias plex-stop="sudo systemctl stop plexmediaserver"
+alias plex-restart="sudo systemctl restart plexmediaserver"
+alias plex-status="sudo systemctl status plexmediaserver"
+
 # git alias
 alias gs-="git status"
 alias gd-="git diff --ignore-all-space"
