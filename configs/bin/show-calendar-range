@@ -1,0 +1,14 @@
+#!/bin/bash
+# Show 5 months of calendars as separate notifications:
+# previous, current, next, next+1, next+2
+day=$(date +%e | sed 's/^ //')
+
+for offset in -1 0 1 2 3; do
+    month=$(date -d "$offset month" +%m)
+    year=$(date -d "$offset month" +%Y)
+    body=$(cal "$month" "$year")
+    if [ "$offset" -eq 0 ]; then
+        body=$(echo "$body" | sed "s/\b$day\b/<span background=\"#0abdc6\" foreground=\"black\">$day<\/span>/")
+    fi
+    notify-send -u normal -t 5000 "Calendar - $(date -d "$offset month" +"%B %Y")" "$body"
+done

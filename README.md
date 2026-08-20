@@ -12,6 +12,7 @@ Locations:
 - configs/.bashrc => ~/.bashrc
 - configs/.XCompose => ~/.XCompose
 - configs/environment.d/90-cedilla.conf => ~/.config/environment.d/90-cedilla.conf
+- configs/bin => ~/.local/bin
 
 Used programs (that didnt come from Fedora i3 Spin):
 - gammastep (for color temperature setting)
