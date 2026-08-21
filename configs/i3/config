@@ -57,6 +57,9 @@ bindsym $mod+Shift+b exec --no-startup-id firefox --private-window
 # open thunar file manager
 bindsym $mod+e exec --no-startup-id thunar
 
+# open mousepad
+bindsym $mod+t exec --no-startup-id mousepad
+
 # show calendar in notification
 bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(~/.local/bin/show-calendar)"'
 
@@ -212,6 +215,8 @@ for_window [class="^Reaper$"] floating enable
 for_window [class="wine"] floating enable
 for_window [class="Wine"] floating enable
 for_window [title="^File Selector"] floating enable
+for_window [class="^Org.xfce.mousepad$"] floating enable, resize set 865 430, move position center
+for_window [class="Thunar"] floating enable, resize set 1274 704, move position center
 
 # Disable X DPMS / screensaver idle blanking (xset package not required)
 exec --no-startup-id $HOME/.local/bin/disable-dpms
