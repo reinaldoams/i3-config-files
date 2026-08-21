@@ -58,7 +58,7 @@ bindsym $mod+Shift+b exec --no-startup-id firefox --private-window
 bindsym $mod+e exec --no-startup-id thunar
 
 # show calendar in notification
-bindsym $mod+c exec --no-startup-id sh -c 'notify-send -u normal -t 5000 "Calendar" "$(~/.local/bin/show-calendar)"'
+bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(~/.local/bin/show-calendar)"'
 
 # show previous/current/next 3 months as separate notifications
 bindsym $mod+Shift+c exec --no-startup-id ~/.local/bin/show-calendar-range

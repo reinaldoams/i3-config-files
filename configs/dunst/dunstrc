@@ -517,5 +517,6 @@
 #
 
 [calendar]
-    summary = "Calendar"
+    appname = "calendar"
+    format = "%b"
     icon_position = off

@@ -1,2 +1,2 @@
-require("src.core")
-require("src.plugins")
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")

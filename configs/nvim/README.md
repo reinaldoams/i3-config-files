@@ -1,19 +1,4 @@
-# Grepehu Personal NVIM Configs
+# 💤 LazyVim
 
-Requires NeoVim 0.12 or later
-
-```bash
-mkdir -p ~/.config/nvim && git clone https://gitlab.com/Grepehu/grepehu-nvim ~/.config/nvim
-```
-
-## Dependencies
-
-- NeoVim `0.12`
-- Treesitter `0.26.5`
-- `golang` (for `efm-langserver`)
-- git
-- ripgrep
-- fzf
-- fd
-- make
-- gcc
+A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
+Refer to the [documentation](https://lazyvim.github.io/installation) to get started.

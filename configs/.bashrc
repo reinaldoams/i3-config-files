@@ -49,3 +49,7 @@ unset rc
 export PATH="$PATH:$HOME/.local/share/yabridge"
 export XSECURELOCK_SAVER_MODULE_PATH="/usr/libexec/xsecurelock/saver_mpv"
 export XSECURELOCK_MPV_ARGS="--loop-file /home/reinaldo/Videos/lock-screen-video.mp4"
+
+# Qwen Code PATH block begin
+export PATH='/home/reinaldo/.local/bin':$PATH
+# Qwen Code PATH block end
