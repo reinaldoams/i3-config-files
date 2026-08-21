@@ -98,6 +98,9 @@ bindsym $mod+e exec thunar
 # show calendar in notification
 bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(/home/reinaldo/.config/i3/scripts/show-calendar.sh)"'
 
+# show previous/current/next 3 months as separate notifications
+bindsym $mod+Shift+c exec --no-startup-id /home/reinaldo/.config/i3/scripts/show-calendar-range.sh
+
 # change focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
@@ -170,8 +173,6 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
