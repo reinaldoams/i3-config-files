@@ -12,6 +12,10 @@ exec --no-startup-id xsettingsd
 exec --no-startup-id systemctl --user import-environment DISPLAY XAUTHORITY
 exec --no-startup-id nm-applet
 
+# polkit authentication agent: i3 starts none, so pkexec-based apps (balenaEtcher,
+# gparted, etc.) fail silently with no way to prompt for the admin password
+exec --no-startup-id /usr/lib/x86_64-linux-gnu/libexec/polkit-kde-authentication-agent-1
+
 # gammastep (night mode)
 exec --no-startup-id gammastep -P -O 3000
 
@@ -86,7 +90,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+q kill
 
 # start i3-dmenu-desktop
-bindsym $mod+d exec "i3-dmenu-desktop"
+bindsym $mod+d exec "rofi -show drun -theme Arc-Dark"
 
 # start thuner
 bindsym $mod+e exec thunar
@@ -125,7 +129,7 @@ bindsym $mod+f floating toggle
 bindsym $mod+space focus mode_toggle
 
 # enable both displays
-bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1080 --rate 74.99 --primary --left-of eDP-1 --output eDP-1 --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
+bindsym $mod+Shift+p exec --no-startup-id sh -c 'xrandr --output HDMI-1 --mode 2560x1440 --rate 143.97 --primary --left-of eDP-1 --output eDP-1 --auto && mkdir -p ~/.cache && echo both > ~/.cache/i3-display-mode && /home/reinaldo/.config/i3/scripts/keep-screen-on.sh && /home/reinaldo/.config/i3/scripts/set-wallpaper.sh && /home/reinaldo/.config/i3/scripts/set-keyboard-layout.sh'
 # toggle between built-in and external display
 bindsym $mod+p exec --no-startup-id /home/reinaldo/.config/i3/scripts/toggle-display.sh
 
@@ -195,15 +199,15 @@ bar {
     # position top
 
      colors {
-        background       #282A36
-        statusline       #F8F8F2
+        background       #1c1c1c
+        statusline       #c7c7c7
         separator        #44475A
 
         # class            border    bground   text
         focused_workspace  #CCCCCC   #CCCCCC   #000000
         active_workspace   #000000   #000000   #F8F8F2
-#        active_workspace   #000000   #44475A   #F8F8F2
-        inactive_workspace #282A36   #282A36   #AAAAAA
+       #active_workspace   #000000   #44475A   #F8F8F2
+        inactive_workspace #1c1c1c   #1c1c1c   #AAAAAA
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
     }

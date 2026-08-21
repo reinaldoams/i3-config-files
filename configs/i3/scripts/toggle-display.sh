@@ -9,7 +9,7 @@ mkdir -p "$(dirname "$STATE_FILE")"
 mode=$(cat "$STATE_FILE" 2>/dev/null || echo "external")
 echo $mode
 if [ "$mode" = "laptop" ] || [ "$mode" = "both" ]; then
-  xrandr --output "$EXTERNAL" --primary --mode 2560x1080 --rate 74.99 --output "$LAPTOP" --off
+  xrandr --output "$EXTERNAL" --primary --mode 2560x1440 --rate 143.97 --output "$LAPTOP" --off
   echo "external" > "$STATE_FILE"
   gammastep -P -O 3000
 else

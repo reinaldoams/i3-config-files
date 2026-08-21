@@ -1,6 +1,7 @@
 In the /configs there are my config files that I use in my Fedora i3 Spin machine.
 In /files are files to where some config files point.
-In fonts folder has the font that I use1
+In /fonts has the font that I use: Cascadia Mono Regular, used in xfce4-terminal at size 16.
+Outside the terminal (i3 config), the font used is Cousine Nerd Font Mono at size 14.
 
 Locations:
 - configs/i3/config => ~/.config/i3/config
@@ -36,6 +37,20 @@ Additional steps:
 
 yabridge note:
 - don't use flatpak to install the DAW to prevent files access issues when syncing plugins
+
+Zed editor setup:
+- keymap file location: `~/.config/zed/keymap.json`
+- fix for ctrl-p (file finder) not working when the project panel (sidebar) is focused, add:
+    ```json
+    [
+      {
+        "context": "ProjectPanel",
+        "bindings": {
+          "ctrl-p": "file_finder::Toggle"
+        }
+      }
+    ]
+    ```
 
 fixing wifi because of setup being i3 on top of debian kde:
 ```
