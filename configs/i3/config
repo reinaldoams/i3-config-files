@@ -91,6 +91,9 @@ bindsym $mod+d exec "i3-dmenu-desktop"
 # start thuner
 bindsym $mod+e exec thunar
 
+# show calendar in notification
+bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(/home/reinaldo/.config/i3/scripts/show-calendar.sh)"'
+
 # change focus
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down

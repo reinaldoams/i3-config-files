@@ -518,3 +518,9 @@
 #    appname = "some_volume_notifiers"
 #    set_stack_tag = "volume"
 #
+
+[calendar]
+    appname = "calendar"
+    format = "%b"
+    icon_position = off
+#
