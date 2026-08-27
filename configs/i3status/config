@@ -23,6 +23,7 @@ order += "cpu_usage"
 order += "memory"
 # order += "wireless _first_"
 order += "volume master"
+order += "battery all"
 order += "tztime date"
 order += "tztime weekday"
 order += "tztime time"
@@ -38,7 +39,8 @@ ethernet _first_ {
 }
 
 battery all {
-        format = "%status %percentage %remaining"
+        format = "bat %percentage"
+        integer_battery_capacity = true
 }
 
 disk "/" {

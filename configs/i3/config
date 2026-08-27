@@ -92,14 +92,20 @@ bindsym $mod+q kill
 # start i3-dmenu-desktop
 bindsym $mod+d exec "rofi -show drun -theme Arc-Dark"
 
+# power menu
+bindsym $mod+Shift+q exec --no-startup-id $HOME/.local/bin/powermenu
+
+# show calendar in notification
+bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(~/.local/bin/show-calendar)"'
+
+# show previous/current/next 3 months as separate notifications
+bindsym $mod+Shift+c exec --no-startup-id ~/.local/bin/show-calendar-range
+
 # start thuner
 bindsym $mod+e exec thunar
 
-# show calendar in notification
-bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(/home/reinaldo/.config/i3/scripts/show-calendar.sh)"'
-
-# show previous/current/next 3 months as separate notifications
-bindsym $mod+Shift+c exec --no-startup-id /home/reinaldo/.config/i3/scripts/show-calendar-range.sh
+# start kate with an empty untitled document
+bindsym $mod+t exec --no-startup-id sh -c 'kate --stdin < /dev/null'
 
 # change focus
 bindsym $mod+Left focus left
@@ -221,6 +227,7 @@ gaps inner 8
 gaps outer 0
 
 # Making pop-up windows of some programs floating enable
+for_window [class="kate"] floating enable, resize set 50 ppt 50 ppt, move position center
 for_window [class="knotes"] floating enable
 for_window [class="Steam"] floating enable
 for_window [class="steamwebhelper"] floating enable
