@@ -87,13 +87,13 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+q kill
+bindsym $mod+Shift+q kill
 
 # start i3-dmenu-desktop
 bindsym $mod+d exec "rofi -show drun -theme Arc-Dark"
 
 # power menu
-bindsym $mod+Shift+q exec --no-startup-id $HOME/.local/bin/powermenu
+bindsym $mod+Shift+Escape exec --no-startup-id $HOME/.local/bin/powermenu
 
 # show calendar in notification
 bindsym $mod+c exec --no-startup-id sh -c 'notify-send -a calendar -u normal -t 5000 "Calendar" "$(~/.local/bin/show-calendar)"'
