@@ -1,0 +1,6 @@
+git:
+  log:
+    showWholeGraph: true
+    order: date-order
+  allBranchesLogCmds:
+    - git log --graph --all --date-order --color=always --abbrev-commit --decorate --date=relative --pretty=medium

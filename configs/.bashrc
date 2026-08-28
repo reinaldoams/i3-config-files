@@ -53,3 +53,6 @@ export XSECURELOCK_MPV_ARGS="--loop-file /home/reinaldo/Videos/lock-screen-video
 # Qwen Code PATH block begin
 export PATH='/home/reinaldo/.local/bin':$PATH
 # Qwen Code PATH block end
+
+# open lazygit in current folder directly on the commits/graph panel
+alias lglog='lazygit -ucf $HOME/.config/lazygit/config.yml,$HOME/.config/lazygit/allbranches.yml --screen-mode full log'

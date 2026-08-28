@@ -16,7 +16,7 @@ exec --no-startup-id sh -c 'pgrep -x nm-applet >/dev/null || exec nm-applet'
 exec --no-startup-id sh -c 'pgrep -x volumeicon >/dev/null || exec volumeicon'
 
 # gammastep (night mode)
-exec --no-startup-id gammastep -P -O 3000
+exec --no-startup-id gammastep -P -O 3000 -m randr
 
 # setting wallpaper
 exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png

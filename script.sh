@@ -42,3 +42,6 @@ mkdir -p ./configs/xfce4-terminal
 rsync -a ~/.config/xfce4/terminal/terminalrc ./configs/xfce4-terminal/terminalrc
 rsync -a $EXCLUDES ~/.local/share/xfce4/terminal/colorschemes/ ./configs/xfce4-terminal/colorschemes/
 echo 'imported xfce4-terminal configs'
+mkdir -p ./configs/lazygit
+rsync -a $EXCLUDES ~/.config/lazygit/ ./configs/lazygit/
+echo 'imported lazygit configs'
