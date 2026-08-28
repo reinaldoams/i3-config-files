@@ -77,13 +77,13 @@ floating_modifier $mod
 bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # start rofi
 bindsym $mod+d exec --no-startup-id rofi -show drun
 
 # power menu
-bindsym $mod+Shift+Escape exec --no-startup-id $HOME/.local/bin/powermenu
+bindsym $mod+Shift+q exec --no-startup-id $HOME/.local/bin/powermenu
 
 # change focus
 bindsym $mod+Left focus left
