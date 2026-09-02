@@ -1,23 +1,18 @@
 #!/bin/bash
-source "$HOME/.config/i3/hdmi-mode.sh"
-
 STATE_FILE="$HOME/.cache/i3-display-mode"
+HDMI="HDMI-A-0"
 DP="DisplayPort-0"
 
 mkdir -p "$(dirname "$STATE_FILE")"
 mode=$(cat "$STATE_FILE" 2>/dev/null || echo "hdmi")
 
-del_hdmi_monitor
-
 if [ "$mode" = "hdmi" ]; then
-  xrandr --output "$DP" --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --scale 1x1 --output "$HDMI" --off
+  xrandr --output "$DP" --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --output "$HDMI" --off
   notify-send -t 1500 "Display" "DisplayPort only"
   echo "dp" > "$STATE_FILE"
   gammastep -P -O 3000
 else
-  xrandr --output "$HDMI" --primary --set "scaling mode" "None" --mode 2560x1440 --rate 144.00 --rotate normal \
-    --transform $HDMI_TRANSFORM --pos 0x0 --output "$DP" --off
-  set_hdmi_monitor 0 0
+  xrandr --output "$HDMI" --primary --mode 2560x1440 --rate 144.00 --rotate left --pos 0x0 --output "$DP" --off
   notify-send -t 1500 "Display" "HDMI only"
   echo "hdmi" > "$STATE_FILE"
   gammastep -P -O 3000

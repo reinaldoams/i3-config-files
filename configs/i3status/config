@@ -78,6 +78,6 @@ tztime time {
 
 tztime date {
         #format = "%Y.%m.%d"
-        format = "<span line_height='2' background='#091833' color='#ffffff'> %d %b <span color='#ea00d9'>[%A]</span> </span>"
+        format = "<span line_height='2' background='#091833' color='#ffffff'> %d %b <span color='#ea00d9'>[%A]</span></span>"
         separator_block_width = 0
 }
