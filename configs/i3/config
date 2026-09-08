@@ -223,7 +223,7 @@ bar {
 # styling windows borders
 for_window [class="^.*"] border pixel 1
 # adding a little margin around windows
-gaps inner 8
+gaps inner 0
 gaps outer 0
 
 # Making pop-up windows of some programs floating enable

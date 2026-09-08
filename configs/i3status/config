@@ -23,7 +23,7 @@ order += "cpu_usage"
 order += "memory"
 # order += "wireless _first_"
 order += "volume master"
-order += "battery all"
+# order += "battery all"
 order += "tztime date"
 order += "tztime weekday"
 order += "tztime time"
@@ -79,7 +79,7 @@ tztime date {
 }
 
 tztime weekday {
-	format = "<span text_transform=\"lowercase\">%A</span>"
+	format = "<span text_transform=\"lowercase\">[%A]</span>"
 }
 
 tztime time {
