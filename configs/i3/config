@@ -30,9 +30,8 @@ exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 # setting parcellite clipboard manager
 exec --no-startup-id parcellite
 
-# use both displays (DisplayPort-0 primary + HDMI-A-0 centered 1920x1080)
-exec --no-startup-id $HOME/.config/i3/dual-display.sh
-# exec --no-startup-id xrandr --output HDMI-A-0 --primary --mode 2560x1080 --rate 74.99 --output DisplayPort-2 --off
+# display setup (DisplayPort-0 only)
+exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --scale 1x1
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -108,12 +107,6 @@ bindsym $mod+f floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# use both displays
-bindsym $mod+Shift+p exec --no-startup-id $HOME/.config/i3/dual-display.sh
-
-# toggle between displays
-bindsym $mod+p exec ~/.config/i3/toggle-display.sh
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
