@@ -41,7 +41,7 @@
     # Offset from the origin
     # NOTE: Dunst from version 1.11 and older use this alternative notation
     # offset = 10x50
-    offset = (16, 56)
+    offset = (5, 30)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -98,10 +98,10 @@
     separator_height = 0
 
     # Padding between text and separator.
-    padding = 16
+    padding = 10
 
     # Horizontal padding.
-    horizontal_padding = 18
+    horizontal_padding = 10
 
     # Padding between text and icon.
     text_icon_padding = 14
@@ -281,7 +281,7 @@
     # corners.
     # The radius will be automatically lowered if it exceeds half of the
     # notification height to avoid clipping text and/or icons.
-    corner_radius = 12
+    corner_radius = 0
 
     # Define which corners to round when drawing the window. If the corner radius
     # is set to 0 this option will be ignored.

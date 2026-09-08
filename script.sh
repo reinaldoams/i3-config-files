@@ -45,3 +45,5 @@ echo 'imported xfce4-terminal configs'
 mkdir -p ./configs/lazygit
 rsync -a $EXCLUDES ~/.config/lazygit/ ./configs/lazygit/
 echo 'imported lazygit configs'
+rsync -a $EXCLUDES ~/.config/alacritty/ ./configs/alacritty/
+echo 'imported alacritty configs'
