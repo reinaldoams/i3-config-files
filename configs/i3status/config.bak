@@ -72,12 +72,12 @@ volume master {
 }
 
 tztime time {
-        format = "<span background='#091833'><span font_size='90%' rise='9000' color='#091833'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#091833'>x</span></span>"
+        format = "<span background='#ea00d9'><span font_size='90%' rise='9000' color='#ea00d9'>x</span><span color='#000000'>%H:%M</span><span font_size='90%' rise='-6000' color='#ea00d9'>x</span></span>"
         separator_block_width = 0
 }
 
 tztime date {
         #format = "%Y.%m.%d"
-        format = "<span line_height='2' background='#ea00d9' color='#000000'> %d %b <span background='#091833' color='#ea00d9'> [%A]</span></span>"
+        format = "<span line_height='2' background='#091833' color='#ffffff'> %d %b <span color='#ea00d9'>[%A] </span></span>"
         separator_block_width = 0
 }

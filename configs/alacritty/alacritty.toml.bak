@@ -1,9 +1,4 @@
 [[keyboard.bindings]]
-key = "N"
-mods = "Control|Shift"
-action = "CreateNewWindow"
-
-[[keyboard.bindings]]
 key = "Enter"
 mods = "Shift"
 chars = "\u001B\r"
