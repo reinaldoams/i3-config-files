@@ -24,6 +24,7 @@ order += "cpu_usage"
 order += "memory"
 order += "volume master"
 order += "tztime date"
+order += "volume decoration"
 order += "tztime time"
 
 wireless _first_ {
@@ -49,7 +50,7 @@ load {
 }
 
 memory {
-        format = "<span line_height='2' background='#711c91' color='#ffffff'> ram %percentage_used </span>"
+        format = "<span line_height='2' background='#711c91' color='#ffffff'>   %used </span>"
         #format = "RAM %percentage_used"
         #format_degraded = "MEMORY < %available"
         separator_block_width = 0
@@ -57,15 +58,15 @@ memory {
 
 cpu_usage {
         # Foreground color
-        format = "<span line_height='2' background='#0abdc6' color='#000000'> cpu %usage </span>"
+        format = "<span line_height='2' background='#0abdc6' color='#000000'>   %usage </span>"
         #format = "CPU %usage"
         separator_block_width = 0
 }
 
 volume master {
         #format = "VOL %volume"
-        format = "<span line_height='2' background='#133e7c' color='#ffffff'> vol %volume </span>"
-        format_muted = "<span line_height='2' background='#133e7c' color='#ffffff'> muted </span>"
+        format = "<span line_height='2' background='#133e7c' color='#ffffff'>   %volume </span>"
+        format_muted = "<span line_height='2' background='#bb0000' color='#000000'>   [MUTED] </span>"
         #format_muted = "🔇%volume"
         separator_block_width = 0
         # format_muted = "<span color='#FF5555'>🔇%volume</span>"
@@ -80,4 +81,10 @@ tztime date {
         #format = "%Y.%m.%d"
         format = "<span line_height='2' background='#ea00d9' color='#000000'> %d %b <span background='#091833' color='#ea00d9'> [%A]</span></span>"
         separator_block_width = 0
+}
+
+volume decoration {
+    format = "<span line_height='2' background='#091833' color='#ff0000'> 󱢇 ⛧°.⋆༺☠︎︎༻⋆.°⛧󱢇 </span>"
+    # format = "⛧°.⋆༺♱༻⋆.°⛧"
+    separator_block_width = 0
 }
