@@ -11,12 +11,13 @@ general {
 	output_format = "i3bar"
         colors = true
         interval = 1
+        separator = ""
         markup = "pango"            # Enables individual color wrapping
-        
-        # Fallback Dracula Colors
-        # color_good = "#50FA7B"      # Green
-        # color_degraded = "#F1FA8C"  # Yellow
-        # color_bad = "#FF5555"       # Red
+
+        # Fallback colors (99x logo palette)
+        color_good = "#A2B372"
+        color_degraded = "#CCB189"
+        color_bad = "#B44B4B"
 }
 
 order += "cpu_usage"
@@ -39,8 +40,9 @@ ethernet _first_ {
 }
 
 battery all {
-        format = "bat %percentage"
+        format = "<span line_height='2' text_transform='lowercase' background='#7A6977' color='#ffffff'> bat %percentage </span>"
         integer_battery_capacity = true
+        separator_block_width = 0
 }
 
 disk "/" {
@@ -52,37 +54,35 @@ load {
 }
 
 memory {
-        # Cyan
-	format = "ram %percentage_used"
-	#format = "📏%percentage_used"
-	decimals = 0
-        #format = "%used/%total"
+        format = "<span line_height='2' text_transform='lowercase' background='#905B54' color='#ffffff'> ram %percentage_used </span>"
+        decimals = 0
         threshold_degraded = "1G"
-        format_degraded = "MEMORY < %available"
+        format_degraded = "<span line_height='2' text_transform='lowercase' background='#B44B4B' color='#ffffff'> ram &lt; %available </span>"
+        separator_block_width = 0
 }
 
 cpu_usage {
-        # Foreground color
-        format = "cpu %usage"
-        # format = "🔲%usage"
+        format = "<span line_height='2' text_transform='lowercase' background='#A2B372' color='#1c1c1c'> cpu %usage </span>"
+        separator_block_width = 0
 }
 
 volume master {
-        # Orange color
-        #format = "🔊%volume"
-        format = "vol %volume"
-        format_muted = "MUTED"
+        format = "<span line_height='2' text_transform='lowercase' background='#BC8E58' color='#1c1c1c'> vol %volume </span>"
+        format_muted = "<span line_height='2' text_transform='lowercase' background='#B44B4B' color='#ffffff'> muted </span>"
+        separator_block_width = 0
 }
 
 tztime date {
-        format = "<span text_transform=\"lowercase\" color=\"#FFFF00\">%d %b</span>"
+        format = "<span line_height='2' text_transform='lowercase' background='#CCB189' color='#1c1c1c'> %d %b </span>"
+        separator_block_width = 0
 }
 
 tztime weekday {
-	format = "<span text_transform=\"lowercase\">[%A]</span>"
+        format = "<span line_height='2' text_transform='lowercase' background='#1c1c1c' color='#CCB189'> [%A]</span>"
+        separator_block_width = 0
 }
 
 tztime time {
-        # Current Line color
-        format = "<span color=\"#FFFF00\">%H:%M</span>"
+        format = "<span background='#1c1c1c'><span font_size='90%' rise='9000' color='#1c1c1c'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#1c1c1c'>x</span></span>"
+        separator_block_width = 0
 }

@@ -1,6 +1,6 @@
 Set $mod Mod4
 
-font pango:Cousine Nerd Font Mono 14
+font pango:Cousine Nerd Font Mono 16
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -29,14 +29,14 @@ exec --no-startup-id export $(gnome-keyring-daemon --start --components=pkcs11,s
 
 
 # setting picom compositor
-exec_always --no-startup-id picom
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 
 # flameshot daemon (re-checked on reload; dbus registration matters more than pgrep)
 exec --no-startup-id sh -c 'sleep 1; /home/reinaldo/.config/i3/scripts/flameshot-daemon.sh'
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/flameshot-daemon.sh
 
 # setting parcellite clipboard manager
-exec --no-startup-id parcellite
+# exec --no-startup-id parcellite
 
 # keep screen on (disable X screensaver and DPMS blanking)
 exec_always --no-startup-id /home/reinaldo/.config/i3/scripts/keep-screen-on.sh
@@ -193,37 +193,37 @@ bindsym $mod+Control Down  resize shrink height 5 px or 5 ppt
 bindsym Print exec --no-startup-id /home/reinaldo/.config/i3/scripts/flameshot-gui.sh
 
 # class                 border    bground   text      indicator child_border
-client.focused          #6272A4   #6272A4   #F8F8F2   #FFFF00   #BD93F9
-client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #44475A
-client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #282A36
-client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
-client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
-client.background                 #F8F8F2
+client.focused          #C49FD5   #C49FD5   #1c1c1c   #905B54   #C49FD5
+client.focused_inactive #7A6977   #7A6977   #ffffff   #7A6977   #7A6977
+client.unfocused        #1c1c1c   #1c1c1c   #C49FD5   #1c1c1c   #1c1c1c
+client.urgent           #B44B4B   #B44B4B   #ffffff   #B44B4B   #B44B4B
+client.placeholder      #1c1c1c   #1c1c1c   #CCB189   #1c1c1c   #1c1c1c
+client.background                 #1c1c1c
 
 # i3bar configuration
 bar {
-    status_command i3status | i3status-title-on-bar --color '#FFFF00'
+    status_command i3status | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#CCB189'
     # position top
 
      colors {
+        # 99x logo palette
         background       #1c1c1c
-        statusline       #c7c7c7
-        separator        #44475A
+        statusline       #CCB189
+        separator        #1c1c1c
 
         # class            border    bground   text
-        focused_workspace  #CCCCCC   #CCCCCC   #000000
-        active_workspace   #000000   #000000   #F8F8F2
-       #active_workspace   #000000   #44475A   #F8F8F2
-        inactive_workspace #1c1c1c   #1c1c1c   #AAAAAA
-        urgent_workspace   #000000   #FF5555   #000000
-        binding_mode       #000000   #FF5555   #F8F8F2
+        focused_workspace  #C49FD5   #C49FD5   #1c1c1c
+        active_workspace   #7A6977   #7A6977   #ffffff
+        inactive_workspace #1c1c1c   #1c1c1c   #C49FD5
+        urgent_workspace   #B44B4B   #B44B4B   #ffffff
+        binding_mode       #B44B4B   #B44B4B   #ffffff
     }
 }
 
 # styling windows borders
-for_window [class="^.*"] border pixel 1
+for_window [class="^.*"] border pixel 3
 # adding a little margin around windows
-gaps inner 0
+gaps inner 15
 gaps outer 0
 
 # Making pop-up windows of some programs floating enable

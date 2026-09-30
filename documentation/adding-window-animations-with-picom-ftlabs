@@ -1,0 +1,58 @@
+Here's a summary of what you did:
+
+---
+
+## Adding Window Animations to Fedora i3 with picom-ftlabs
+
+### 1. Fix the i3 config typo
+In `~/.config/i3/config`, the last line had `:wq` accidentally appended:
+```
+for_window [class="Wine"] floating enable   # removed the :wq
+```
+
+### 2. Install build dependencies
+```bash
+sudo dnf install -y meson ninja-build xcb-util-devel libev-devel \
+  xcb-util-renderutil-devel xcb-util-image-devel libconfig-devel \
+  dbus-devel pcre2-devel uthash-devel libXext-devel libXdamage-devel \
+  libXfixes-devel libXcomposite-devel libXrandr-devel libXrender-devel \
+  pixman-devel libepoxy-devel
+```
+
+### 3. Clone and build picom-ftlabs
+```bash
+git clone https://github.com/FT-Labs/picom ~/builds/picom-ftlabs
+cd ~/builds/picom-ftlabs
+meson setup --buildtype=release build
+ninja -C build
+sudo ninja -C build install
+```
+
+### 4. Configure animations
+Create/edit `~/.config/picom/picom.conf` and add:
+```conf
+animations = true;
+animation-stiffness = 200;
+animation-dampening = 25;
+animation-mass = 1;
+
+animation-for-open-window = "zoom";
+animation-for-unmap-window = "zoom";
+animation-for-workspace-switch-in = "slide-right";
+animation-for-workspace-switch-out = "slide-left";
+```
+
+### 5. Update i3 config to use the config file explicitly
+In `~/.config/i3/config`:
+```
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
+```
+
+### 6. Restart i3
+```
+$mod+Shift+r
+```
+
+---
+
+Note: the stock `picom v13` that ships with Fedora has no animation support — picom-ftlabs is a fork that adds it, which is why the custom build was necessary.
