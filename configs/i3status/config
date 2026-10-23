@@ -23,8 +23,9 @@ general {
 order += "cpu_usage"
 order += "memory"
 order += "volume master"
-order += "tztime date"
-order += "volume decoration"
+# order += "tztime date"
+order += "tztime dateAlternative"
+# order += "volume decoration"
 order += "tztime time"
 
 wireless _first_ {
@@ -50,7 +51,7 @@ load {
 }
 
 memory {
-        format = "<span line_height='2' background='#711c91' color='#ffffff'>   %used </span>"
+        format = "<span line_height='2' background='#333333' color='#ffffff'>   %used </span>"
         #format = "RAM %percentage_used"
         #format_degraded = "MEMORY < %available"
         separator_block_width = 0
@@ -58,14 +59,14 @@ memory {
 
 cpu_usage {
         # Foreground color
-        format = "<span line_height='2' background='#0abdc6' color='#000000'>   %usage </span>"
+        format = "<span line_height='2' background='#ffffff' color='#000000'>   %usage </span>"
         #format = "CPU %usage"
         separator_block_width = 0
 }
 
 volume master {
         #format = "VOL %volume"
-        format = "<span line_height='2' background='#133e7c' color='#ffffff'>   %volume </span>"
+        format = "<span line_height='2' background='#ffffff' color='#000000'>   %volume </span>"
         format_muted = "<span line_height='2' background='#bb0000' color='#000000'>   [MUTED] </span>"
         #format_muted = "🔇%volume"
         separator_block_width = 0
@@ -73,18 +74,25 @@ volume master {
 }
 
 tztime time {
-        format = "<span background='#091833'><span font_size='90%' rise='9000' color='#091833'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#091833'>x</span></span>"
+        format = "<span background='#000000'><span font_size='90%' rise='9000' color='#091833'>x</span><span color='#ffffff'>%H:%M</span><span font_size='90%' rise='-6000' color='#091833'>x</span></span>"
         separator_block_width = 0
 }
 
 tztime date {
         #format = "%Y.%m.%d"
-        format = "<span line_height='2' background='#ea00d9' color='#000000'> %d %b <span background='#091833' color='#ea00d9'> [%A]</span></span>"
+        format = "<span line_height='2' background='#333333' color='#ffffff'> %d %b <span background='#ffffff' color='#000000'> [%A] </span></span>"
+        separator_block_width = 0
+}
+
+tztime dateAlternative {
+        #format = "%Y.%m.%d"
+        format = "<span line_height='2' background='#333333' color='#ffffff'> %d %b, %A </span>"
         separator_block_width = 0
 }
 
 volume decoration {
-    format = "<span line_height='2' background='#091833' color='#ff0000'> 󱢇 ⛧°.⋆༺☠︎︎༻⋆.°⛧󱢇 </span>"
+    format = "<span line_height='2' background='#000000' color='#ff0000'> 󱢇 ⛧°.⋆༺☠︎︎༻⋆.°⛧󱢇 </span>"
+    format_muted = "<span line_height='2' background='#000000' color='#ff0000'> 󱢇 ⛧°.⋆༺☠︎︎༻⋆.°⛧󱢇 </span>"
     # format = "⛧°.⋆༺♱༻⋆.°⛧"
     separator_block_width = 0
 }

@@ -1,6 +1,6 @@
 set $mod Mod4
 
-font pango:FiraCode Nerd Font 14
+font pango:FiraCode Nerd Font Regular 12
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -32,6 +32,10 @@ exec --no-startup-id parcellite
 
 # display setup (DisplayPort-0 only)
 exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --scale 1x1
+
+# display switching: toggle DisplayPort/HDMI, or both side by side (HDMI on the right)
+bindsym $mod+p exec --no-startup-id ~/.config/i3/scripts/display-switch.sh toggle
+bindsym $mod+Shift+p exec --no-startup-id ~/.config/i3/scripts/display-switch.sh both
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -164,9 +168,9 @@ bindsym $mod+Control Down  resize shrink height 5 px or 5 ppt
 bindsym Print exec --no-startup-id flameshot gui
 
 # class                 border    bground   text      indicator child_border
-client.focused          #6272A4   #6272A4   #F8F8F2   #ea00d9   #711c91
-client.focused_inactive #44475A   #44475A   #F8F8F2   #6272A4   #091833
-client.unfocused        #282A36   #282A36   #BFBFBF   #282A36   #091833
+client.focused          #cccccc   #cccccc   #F8F8F2   #ff0000   #cccccc
+client.focused_inactive #cccccc   #cccccc   #F8F8F2   #000000   #000000
+client.unfocused        #282A36   #282A36   #BFBFBF   #000000   #000000
 client.urgent           #44475A   #FF5555   #F8F8F2   #FF5555   #FF5555
 client.placeholder      #282A36   #282A36   #F8F8F2   #282A36   #282A36
 client.background                 #F8F8F2
@@ -174,24 +178,73 @@ client.background                 #F8F8F2
 
 # i3bar configuration
 bar {
-    status_command i3status | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#ffffff'
+    output DisplayPort-0
+    tray_output DisplayPort-0
+    status_command i3status | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#ffffff' | ~/.config/i3/scripts/title-truncate-start.py
     position top
     # padding 2px
 
      colors {
-        background       #091833
+        background       #000000
         statusline       #55ead4
         separator        #091833
 
         # class            border    bground   text
-        focused_workspace  #ea00d9   #ea00d9   #091833
-        inactive_workspace #000000   #091833   #ea00d9
+        focused_workspace  #ea00d9   #ffffff   #000000
+        inactive_workspace #000000   #000000   #ffffff
+        urgent_workspace   #000000   #FF5555   #000000
+        binding_mode       #000000   #FF5555   #F8F8F2
+    }
+}
+
+# HDMI-only status bar (CPU, RAM, volume, date, time, tree), shown above bar-hdmi-2-main (see ~/.config/i3status/hdmi-top.conf).
+# i3 stacks dock bars by id, so the "1"/"2" in the ids sets the order.
+bar {
+    id bar-hdmi-1-stats
+    font pango:FiraCode Nerd Font Regular 14
+    output HDMI-A-0
+    tray_output HDMI-A-0
+    workspace_buttons no
+    binding_mode_indicator no
+    status_command i3status -c ~/.config/i3status/hdmi-top.conf | ~/.config/i3/scripts/christmas.sh
+    position top
+
+     colors {
+        background       #000000
+        statusline       #55ead4
+        separator        #091833
+
+        # class            border    bground   text
+        focused_workspace  #ea00d9   #ffffff   #000000
+        inactive_workspace #000000   #000000   #ffffff
+        urgent_workspace   #000000   #FF5555   #000000
+        binding_mode       #000000   #FF5555   #F8F8F2
+    }
+}
+
+# HDMI-only main bar: workspaces and window title (see ~/.config/i3status/hdmi.conf)
+bar {
+    id bar-hdmi-2-main
+    font pango:FiraCode Nerd Font Regular 14
+    output HDMI-A-0
+    tray_output none
+    status_command i3status -c ~/.config/i3status/hdmi.conf | i3status-title-on-bar --color '#ffffff' | ~/.config/i3/scripts/title-truncate-start.py
+    position top
+
+     colors {
+        background       #000000
+        statusline       #55ead4
+        separator        #091833
+
+        # class            border    bground   text
+        focused_workspace  #ea00d9   #ffffff   #000000
+        inactive_workspace #000000   #000000   #ffffff
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
     }
 }
 # styling windows borders
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 2
 # adding a little margin around windows
 gaps inner 15
 
