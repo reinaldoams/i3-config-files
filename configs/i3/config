@@ -15,11 +15,9 @@ exec --no-startup-id systemctl --user start i3-session.target
 exec --no-startup-id sh -c 'pgrep -x nm-applet >/dev/null || exec nm-applet'
 exec --no-startup-id sh -c 'pgrep -x volumeicon >/dev/null || exec volumeicon'
 
-# gammastep (night mode)
-exec --no-startup-id gammastep -P -O 3000 -m randr
-
-# setting wallpaper
-exec --no-startup-id feh --bg-fill ~/Pictures/wallpaper-i3.png
+# display setup at login: DisplayPort-0 only, HDMI off. Night mode (gammastep)
+# and wallpaper run after xrandr so they apply to the final monitor layout.
+exec --no-startup-id sh -c 'xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --scale 1x1 --output HDMI-A-0 --off; gammastep -P -O 3000 -m randr; feh --bg-fill ~/Pictures/wallpaper-i3.png'
 
 # setting video wallpaper
 # exec_always --no-startup-id bash -c "pgrep -x xwinwrap >/dev/null || $HOME/.config/i3/video-wallpaper.sh"
@@ -29,9 +27,6 @@ exec_always --no-startup-id picom --config ~/.config/picom/picom.conf -b
 
 # setting parcellite clipboard manager
 exec --no-startup-id parcellite
-
-# display setup (DisplayPort-0 only)
-exec --no-startup-id xrandr --output DisplayPort-0 --primary --mode 2560x1440 --rate 179.85 --rotate normal --pos 0x0 --scale 1x1
 
 # display switching: toggle DisplayPort/HDMI, or both side by side (HDMI on the right)
 bindsym $mod+p exec --no-startup-id ~/.config/i3/scripts/display-switch.sh toggle
