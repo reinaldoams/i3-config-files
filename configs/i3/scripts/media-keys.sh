@@ -65,15 +65,15 @@ mpris_cmd() {
 case "$1" in
     volume-up)
         pactl set-sink-volume @DEFAULT_SINK@ +5%
-        notify -t 800 -h int:value:"$(volume_pct)" "Volume" ""
+        notify -t 800 -h string:x-dunst-stack-tag:volume "Volume" "$(volume_pct)%"
         ;;
     volume-down)
         pactl set-sink-volume @DEFAULT_SINK@ -5%
-        notify -t 800 -h int:value:"$(volume_pct)" "Volume" ""
+        notify -t 800 -h string:x-dunst-stack-tag:volume "Volume" "$(volume_pct)%"
         ;;
     volume-mute)
         pactl set-sink-mute @DEFAULT_SINK@ toggle
-        notify -t 800 "Volume" "Mute toggled"
+        notify -t 800 -h string:x-dunst-stack-tag:volume "Volume" "Mute toggled"
         ;;
     mic-mute)
         pactl set-source-mute @DEFAULT_SOURCE@ toggle

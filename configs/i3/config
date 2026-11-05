@@ -1,6 +1,6 @@
 Set $mod Mod4
 
-font pango:Cousine Nerd Font Mono 16
+font pango:Cousine Nerd Font Mono 13
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
@@ -134,6 +134,10 @@ bindsym $mod+s layout toggle tabbed splith
 # toggle tiling / floating
 bindsym $mod+f floating toggle
 
+# toggle fullscreen
+bindsym $mod+Shift+F11 fullscreen toggle
+
+
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
@@ -202,7 +206,7 @@ client.background                 #1c1c1c
 
 # i3bar configuration
 bar {
-    status_command i3status | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#CCB189'
+    status_command i3status -c ~/.config/i3/i3status.conf | sed -u -e 's/ bat 100% / bat full /' -e 's/ ram \([0-9.]*\) GiB / ram \1 /' | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#ffffff'
     # position top
 
      colors {
