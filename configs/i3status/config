@@ -86,7 +86,7 @@ tztime date {
 
 tztime dateAlternative {
         #format = "%Y.%m.%d"
-        format = "<span line_height='2' background='#333333' color='#ffffff'> %d %b, %A </span>"
+        format = "<span line_height='2' background='#333333' color='#ffffff'> %d %b <span foreground='#ff0000'>☭</span> %A </span>"
         separator_block_width = 0
 }
 

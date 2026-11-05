@@ -175,9 +175,9 @@ client.background                 #F8F8F2
 bar {
     output DisplayPort-0
     tray_output DisplayPort-0
-    status_command i3status | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#ffffff' | ~/.config/i3/scripts/title-truncate-start.py
+    workspace_min_width 30
+    status_command i3status | sed -u 's/ GiB//g' | ~/.config/i3/scripts/christmas.sh | i3status-title-on-bar --color '#ffffff' | ~/.config/i3/scripts/title-truncate-start.py
     position top
-    # padding 2px
 
      colors {
         background       #000000
@@ -185,7 +185,7 @@ bar {
         separator        #091833
 
         # class            border    bground   text
-        focused_workspace  #ea00d9   #ffffff   #000000
+        focused_workspace  #ffffff   #333333   #ffffff
         inactive_workspace #000000   #000000   #ffffff
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
@@ -201,7 +201,7 @@ bar {
     tray_output HDMI-A-0
     workspace_buttons no
     binding_mode_indicator no
-    status_command i3status -c ~/.config/i3status/hdmi-top.conf | ~/.config/i3/scripts/christmas.sh
+    status_command i3status -c ~/.config/i3status/hdmi-top.conf | sed -u 's/ GiB//g' | ~/.config/i3/scripts/christmas.sh
     position top
 
      colors {
@@ -210,7 +210,7 @@ bar {
         separator        #091833
 
         # class            border    bground   text
-        focused_workspace  #ea00d9   #ffffff   #000000
+        focused_workspace  #ffffff   #333333   #ffffff
         inactive_workspace #000000   #000000   #ffffff
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
@@ -223,6 +223,7 @@ bar {
     font pango:FiraCode Nerd Font Regular 14
     output HDMI-A-0
     tray_output none
+    workspace_min_width 30
     status_command i3status -c ~/.config/i3status/hdmi.conf | i3status-title-on-bar --color '#ffffff' | ~/.config/i3/scripts/title-truncate-start.py
     position top
 
@@ -232,7 +233,7 @@ bar {
         separator        #091833
 
         # class            border    bground   text
-        focused_workspace  #ea00d9   #ffffff   #000000
+        focused_workspace  #ffffff   #333333   #ffffff
         inactive_workspace #000000   #000000   #ffffff
         urgent_workspace   #000000   #FF5555   #000000
         binding_mode       #000000   #FF5555   #F8F8F2
@@ -252,6 +253,7 @@ for_window [class="^Reaper$"] floating enable
 for_window [class="wine"] floating enable
 for_window [class="Wine"] floating enable
 for_window [title="^File Selector"] floating enable
+for_window [title="^Extract"] floating enable
 for_window [class="^Org.xfce.mousepad$"] floating enable, resize set 865 430, move position center
 for_window [class="Thunar"] floating enable, resize set 1274 704, move position center
 
