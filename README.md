@@ -29,6 +29,20 @@ Used programs (that didnt come from Fedora i3 Spin):
 - compton
 
 Styling:
+- General color palette:
+    - Charcoal: `#282A2E`
+    - White: `#FFFFFF`
+    - Gold: `#F0C674`
+    - Turquoise: `#55EAD4`
+    - Light gray: `#C5C8C6`
+    - Red: `#FF5555`
+
+- Exceptions:
+    - Rofi: Gruvbox Dark Hard.
+    - XFCE terminal: its own ANSI palette and near-black background.
+    - i3 window borders: additional gray and purple-gray shades.
+    - i3status: extra green, yellow, and red shades for status indicators.
+
 - Bibata Cursor (`Bibata-Modern-Ice`, size 26)
 	Install theme under `~/.icons` or `~/.local/share/icons` (extract release tarball from https://github.com/ful1e5/Bibata_Cursor).
 	~/.icons/default/index.theme (or `~/.local/share/icons/default/index.theme`):
